@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Yoldas.Core/Yoldas.Core.csproj" />
+    <Project Path="src/Yoldas.Infrastructure/Yoldas.Infrastructure.csproj" />
+    <Project Path="src/Yoldas.Api/Yoldas.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Yoldas.UnitTests/Yoldas.UnitTests.csproj" />
+    <Project Path="tests/Yoldas.IntegrationTests/Yoldas.IntegrationTests.csproj" />
+  </Folder>
+</Solution>
