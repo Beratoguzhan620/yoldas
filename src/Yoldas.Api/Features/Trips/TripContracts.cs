@@ -31,8 +31,8 @@ public sealed record StopResponse(int Index, string Name, double Latitude, doubl
 /// <summary>Where a passenger joins or leaves: the point of the route closest to them, the nearest stop, and when.</summary>
 public sealed record MatchPoint(double Latitude, double Longitude, double KmAlong, double KmFromYou, string NearStop, DateTimeOffset At);
 
-/// <summary>A passenger's part of the trip and its price.</summary>
-public sealed record MatchResponse(MatchPoint Pickup, MatchPoint Dropoff, double Km, decimal Price);
+/// <summary>A passenger's part of the trip, its price for a seat, and how many seats are free all along it.</summary>
+public sealed record MatchResponse(MatchPoint Pickup, MatchPoint Dropoff, double Km, decimal Price, int SeatsFree);
 
 public sealed record TripSummary(
     Guid Id, string From, string To, DateTimeOffset DepartureAt, DateTimeOffset ArrivalAt, DriverResponse Driver, CarResponse Car, int Seats, int SeatsLeft,
@@ -41,4 +41,4 @@ public sealed record TripSummary(
 public sealed record TripResponse(
     Guid Id, DriverResponse Driver, CarResponse Car, IReadOnlyList<StopResponse> Stops, double LengthKm, int DurationMinutes, DateTimeOffset DepartureAt,
     DateTimeOffset ArrivalAt, int Seats, int SeatsLeft, decimal PricePerSeat, decimal MaxPricePerSeat, bool InstantBook, string Notes, TripStatus Status,
-    bool IsMine, MatchResponse? Match);
+    bool IsMine, MatchResponse? Match, Guid? MyBookingId);

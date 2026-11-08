@@ -149,9 +149,16 @@ public sealed class Trip
     /// Changes what can change before the trip. The route cannot: passengers' seats are on parts of it, so a different
     /// route is a different trip.
     /// </summary>
-    public void Change(int vehicleSeats, DateTimeOffset departureAt, int seats, long pricePerSeatMinor, bool instantBook, string? notes, DateTimeOffset now)
+    public void Change(
+        int vehicleSeats, DateTimeOffset departureAt, int seats, long pricePerSeatMinor, bool instantBook, string? notes, DateTimeOffset now, bool hasPassengers = false)
     {
         RequireScheduled("Only a trip that has not started can be changed.");
+        if (hasPassengers && (departureAt.ToUniversalTime() != DepartureAt || pricePerSeatMinor != PricePerSeatMinor))
+        {
+            throw new DomainException(ErrorCodes.InvalidState,
+                "People have asked for seats at this time and price. Cancel the trip and offer a new one to change them.");
+        }
+
         if (departureAt < now + EarliestDeparture || departureAt > now + LatestDeparture)
         {
             throw new DomainException(ErrorCodes.ValidationFailed, "A trip leaves at least 30 minutes from now and within 90 days.");

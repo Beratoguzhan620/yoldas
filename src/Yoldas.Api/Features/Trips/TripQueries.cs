@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Yoldas.Api.Common;
 using Yoldas.Core;
+using Yoldas.Core.Bookings;
 using Yoldas.Core.Geo;
 using Yoldas.Core.Trips;
 using Yoldas.Core.Users;
@@ -32,7 +33,7 @@ internal static class TripQueries
     /// Where a passenger going from one place to another would join and leave this trip, and what they would pay;
     /// null if the trip goes the other way or would carry them less than two kilometres.
     /// </summary>
-    public static MatchResponse? Match(Trip trip, (double Latitude, double Longitude) from, (double Latitude, double Longitude) to)
+    public static MatchResponse? Match(Trip trip, IReadOnlyList<SeatSpan> taken, (double Latitude, double Longitude) from, (double Latitude, double Longitude) to)
     {
         var pickup = trip.Route.Locate(GeoPoint.At(from.Latitude, from.Longitude));
         var dropoff = trip.Route.Locate(GeoPoint.At(to.Latitude, to.Longitude));
@@ -43,7 +44,7 @@ internal static class TripQueries
 
         return new MatchResponse(
             Point(trip, pickup), Point(trip, dropoff), Km(dropoff.MetersAlong - pickup.MetersAlong),
-            Money.FromMinor(trip.PriceFor(pickup.MetersAlong, dropoff.MetersAlong)));
+            Money.FromMinor(trip.PriceFor(pickup.MetersAlong, dropoff.MetersAlong)), Seats.Free(trip.Seats, taken, pickup.MetersAlong, dropoff.MetersAlong));
     }
 
     private static MatchPoint Point(Trip trip, RoutePosition position) => new(
@@ -79,13 +80,13 @@ internal static class TripQueries
             .Take(Candidates)
             .ToListAsync(ct);
 
-        var matches = trips.Select(t => (Trip: t, Match: Match(t, from, to))).Where(m => m.Match is not null).ToList();
-        var left = await SeatsLeftAsync(db, matches.Select(m => m.Trip.Id).ToList(), ct);
+        var taken = await TakenAsync(db, trips.Select(t => t.Id).ToList(), ct);
+        var matches = trips
+            .Select(t => (Trip: t, Taken: TakenOn(taken, t.Id), Match: Match(t, TakenOn(taken, t.Id), from, to)))
+            .Where(m => m.Match is { } match && match.SeatsFree >= seats)
+            .ToList();
         var people = await PeopleAsync(db, matches.Select(m => m.Trip).ToList(), ct);
-        var found = matches
-            .Select(m => (m.Trip, m.Match, Left: left.GetValueOrDefault(m.Trip.Id, m.Trip.Seats)))
-            .Where(m => m.Left >= seats)
-            .Select(m => Summary(m.Trip, people.Drivers[m.Trip.DriverId], people.Vehicles[m.Trip.VehicleId], m.Left, m.Match));
+        var found = matches.Select(m => Summary(m.Trip, people.Drivers[m.Trip.DriverId], people.Vehicles[m.Trip.VehicleId], SeatsLeft(m.Trip, m.Taken), m.Match));
 
         return sort switch
         {
@@ -95,9 +96,20 @@ internal static class TripQueries
         };
     }
 
-    /// <summary>Seats nobody has taken anywhere on the route. Bookings fill this in.</summary>
-    public static Task<Dictionary<Guid, int>> SeatsLeftAsync(YoldasDbContext db, IReadOnlyList<Guid> tripIds, CancellationToken ct) =>
-        Task.FromResult(new Dictionary<Guid, int>());
+    /// <summary>The parts of each trip's route seats are confirmed on.</summary>
+    public static async Task<ILookup<Guid, SeatSpan>> TakenAsync(YoldasDbContext db, IReadOnlyList<Guid> tripIds, CancellationToken ct)
+    {
+        var rows = await db.Bookings.AsNoTracking()
+            .Where(b => tripIds.Contains(b.TripId) && (b.Status == BookingStatus.Confirmed || b.Status == BookingStatus.Boarded))
+            .Select(b => new { b.TripId, Span = new SeatSpan(b.FromMeters, b.ToMeters, b.Seats) })
+            .ToListAsync(ct);
+        return rows.ToLookup(r => r.TripId, r => r.Span);
+    }
+
+    public static IReadOnlyList<SeatSpan> TakenOn(ILookup<Guid, SeatSpan> taken, Guid tripId) => [.. taken[tripId]];
+
+    /// <summary>Seats free all the way from the first stop to the last.</summary>
+    public static int SeatsLeft(Trip trip, IReadOnlyList<SeatSpan> taken) => Seats.Free(trip.Seats, taken, 0, trip.LengthMeters);
 
     public static async Task<(Dictionary<Guid, User> Drivers, Dictionary<Guid, Vehicle> Vehicles)> PeopleAsync(
         YoldasDbContext db, IReadOnlyList<Trip> trips, CancellationToken ct)
@@ -114,20 +126,27 @@ internal static class TripQueries
     {
         var trip = await db.Trips.AsNoTracking().SingleOrDefaultAsync(t => t.Id == tripId, ct)
             ?? throw new DomainException(ErrorCodes.NotFound, "There is no trip with this id.");
-        var mine = trip.DriverId == viewerId;
-        if (trip.Status == TripStatus.Cancelled && !mine && trip.CancelledAt < now - TimeSpan.FromDays(7))
+        var isDriver = trip.DriverId == viewerId;
+        if (trip.Status == TripStatus.Cancelled && !isDriver && trip.CancelledAt < now - TimeSpan.FromDays(7))
         {
             throw new DomainException(ErrorCodes.NotFound, "There is no trip with this id.");
         }
 
         var driver = await db.Users.AsNoTracking().SingleAsync(u => u.Id == trip.DriverId, ct);
         var vehicle = await db.Vehicles.AsNoTracking().SingleAsync(v => v.Id == trip.VehicleId, ct);
-        var left = (await SeatsLeftAsync(db, [trip.Id], ct)).GetValueOrDefault(trip.Id, trip.Seats);
-        var match = from is { } f && to is { } t ? Match(trip, f, t) : null;
+        var taken = TakenOn(await TakenAsync(db, [trip.Id], ct), trip.Id);
+        var mine = viewerId is { } v
+            ? await db.Bookings.AsNoTracking()
+                .Where(b => b.TripId == tripId && b.PassengerId == v && (b.Status == BookingStatus.Requested || b.Status == BookingStatus.Confirmed || b.Status == BookingStatus.Boarded))
+                .Select(b => new { b.Id, b.Status })
+                .SingleOrDefaultAsync(ct)
+            : null;
+        var confirmed = mine is { Status: BookingStatus.Confirmed or BookingStatus.Boarded };
+        var match = from is { } f && to is { } t ? Match(trip, taken, f, t) : null;
         return new TripResponse(
-            trip.Id, Driver(driver), Car(vehicle, showPlate: mine), Stops(trip), Km(trip.LengthMeters), (int)trip.Duration.TotalMinutes, trip.DepartureAt,
-            trip.ArrivalAt, trip.Seats, left, Money.FromMinor(trip.PricePerSeatMinor), Money.FromMinor(Trip.MaxPriceFor(trip.LengthMeters)), trip.InstantBook,
-            trip.Notes, trip.Status, mine, match);
+            trip.Id, Driver(driver), Car(vehicle, showPlate: isDriver || confirmed), Stops(trip), Km(trip.LengthMeters), (int)trip.Duration.TotalMinutes,
+            trip.DepartureAt, trip.ArrivalAt, trip.Seats, SeatsLeft(trip, taken), Money.FromMinor(trip.PricePerSeatMinor),
+            Money.FromMinor(Trip.MaxPriceFor(trip.LengthMeters)), trip.InstantBook, trip.Notes, trip.Status, isDriver, match, mine?.Id);
     }
 
     public static IReadOnlyList<StopResponse> Stops(Trip trip) =>

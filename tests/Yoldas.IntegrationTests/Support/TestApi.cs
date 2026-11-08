@@ -78,6 +78,21 @@ public static class TestApi
         return await response.ReadAsync<TripDto>();
     }
 
+    /// <summary>Asks for seats from one place to another; the response is returned as it is, for tests that expect a refusal.</summary>
+    public static Task<HttpResponseMessage> RequestAsync(this Person passenger, Guid tripId, (double Lat, double Lng) from, (double Lat, double Lng) to, int seats = 1, string? message = null) =>
+        passenger.Http.PostAsJsonAsync("/api/bookings", new { tripId, fromLat = from.Lat, fromLng = from.Lng, toLat = to.Lat, toLng = to.Lng, seats, message });
+
+    public static async Task<BookingDto> BookAsync(this Person passenger, Guid tripId, (double Lat, double Lng) from, (double Lat, double Lng) to, int seats = 1, string? message = null)
+    {
+        var response = await passenger.RequestAsync(tripId, from, to, seats, message);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException($"Booking failed: {(int)response.StatusCode} {await response.Content.ReadAsStringAsync()}");
+        }
+
+        return await response.ReadAsync<BookingDto>();
+    }
+
     public static string Search((double Lat, double Lng) from, (double Lat, double Lng) to, string extra = "") =>
         FormattableString.Invariant($"/api/trips?fromLat={from.Lat}&fromLng={from.Lng}&toLat={to.Lat}&toLng={to.Lng}{extra}");
 
