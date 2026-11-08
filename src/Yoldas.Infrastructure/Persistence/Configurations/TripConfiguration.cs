@@ -35,6 +35,7 @@ internal sealed class TripConfiguration : IEntityTypeConfiguration<Trip>
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Id).ValueGeneratedNever();
         builder.Property(t => t.Path).HasColumnType("geography (linestring, 4326)");
+        builder.Property(t => t.LivePosition).HasColumnType("geography (point, 4326)");
         builder.Property(t => t.Notes).HasMaxLength(Trip.NotesMax);
         builder.Property(t => t.Status).HasConversion<string>().HasMaxLength(10);
         builder.Property<uint>("Version").IsRowVersion();
@@ -49,6 +50,8 @@ internal sealed class TripConfiguration : IEntityTypeConfiguration<Trip>
         builder.HasIndex(t => t.Path).HasMethod("gist");
         builder.HasIndex(t => t.DepartureAt).HasFilter("status = 'Scheduled'");
         builder.HasIndex(t => new { t.DriverId, t.DepartureAt });
+        // The sweeper's work: trips that never started, and trips nobody finished.
+        builder.HasIndex(t => t.Status).HasDatabaseName("ix_trips_open").HasFilter("status IN ('Scheduled', 'Started')");
     }
 }
 

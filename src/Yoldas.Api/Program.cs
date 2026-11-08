@@ -5,6 +5,7 @@ using System.Threading.RateLimiting;
 using Yoldas.Api.Common;
 using Yoldas.Api.Features.Auth;
 using Yoldas.Api.Features.Bookings;
+using Yoldas.Api.Features.Live;
 using Yoldas.Api.Features.Trips;
 using Yoldas.Api.Logging;
 using Yoldas.Infrastructure;
@@ -34,6 +35,11 @@ builder.Services.AddYoldasPersistence(connectionString);
 builder.Services.AddYoldasAuth(builder.Configuration);
 
 builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<TripDayService>();
+builder.Services.AddSingleton<LivePublisher>();
+// Live positions. One instance serves the hub; with several, a backplane such as Redis would share its groups.
+builder.Services.AddSignalR(options => options.EnableDetailedErrors = builder.Environment.IsDevelopment())
+    .AddJsonProtocol(options => options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.Configure<SweeperOptions>(builder.Configuration.GetSection(SweeperOptions.Section));
 builder.Services.AddSingleton<BookingSweeper>();
 if (builder.Configuration.GetValue($"{SweeperOptions.Section}:Enabled", true))
@@ -108,6 +114,8 @@ app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
 app.MapAuthEndpoints();
 app.MapTripEndpoints();
 app.MapBookingEndpoints();
+app.MapTripDayEndpoints();
+app.MapHub<TripHub>(TripHub.Path);
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
 app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });

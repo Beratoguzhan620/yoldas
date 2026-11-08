@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Yoldas.Core.Bookings;
+using Yoldas.Core.Reviews;
 using Yoldas.Core.Trips;
 using Yoldas.Core.Users;
 
@@ -35,6 +36,7 @@ internal sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.Property(b => b.Reason).HasMaxLength(Booking.ReasonMax);
         builder.Property(b => b.Status).HasConversion<string>().HasMaxLength(10);
         builder.Property(b => b.CancelledBy).HasConversion<string>().HasMaxLength(10);
+        builder.Property(b => b.BoardingCode).HasMaxLength(4);
         builder.Property<uint>("Version").IsRowVersion();
         builder.Ignore(b => b.TotalMinor);
         builder.Ignore(b => b.Holds);
@@ -49,5 +51,23 @@ internal sealed class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.HasIndex(b => new { b.TripId, b.PassengerId }).IsUnique().HasDatabaseName("ix_bookings_one_per_passenger")
             .HasFilter("status IN ('Requested', 'Confirmed', 'Boarded')");
         builder.HasIndex(b => b.RespondBy).HasFilter("status = 'Requested'");
+    }
+}
+
+internal sealed class ReviewConfiguration : IEntityTypeConfiguration<Review>
+{
+    public void Configure(EntityTypeBuilder<Review> builder)
+    {
+        builder.ToTable("reviews", t => t.HasCheckConstraint("ck_reviews_stars", "stars BETWEEN 1 AND 5"));
+        builder.HasKey(r => r.Id);
+        builder.Property(r => r.Id).ValueGeneratedNever();
+        builder.Property(r => r.Of).HasConversion<string>().HasMaxLength(10);
+        builder.Property(r => r.Comment).HasMaxLength(Review.CommentMax);
+        builder.HasOne<Booking>().WithMany().HasForeignKey(r => r.BookingId).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne<User>().WithMany().HasForeignKey(r => r.AuthorId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne<User>().WithMany().HasForeignKey(r => r.SubjectId).OnDelete(DeleteBehavior.Restrict);
+        // One review per side per ride, enforced by the database.
+        builder.HasIndex(r => new { r.BookingId, r.AuthorId }).IsUnique();
+        builder.HasIndex(r => new { r.SubjectId, r.Of, r.CreatedAt });
     }
 }

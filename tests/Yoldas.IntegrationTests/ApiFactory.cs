@@ -45,7 +45,7 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
     public DateOnly Day(int fromToday) => Core.Clock.Today(Clock.GetUtcNow()).AddDays(fromToday);
 
     /// <summary>A time in Turkey some days from today: Day(1) at 08:00 is tomorrow morning.</summary>
-    public DateTimeOffset At(int fromToday, int hour, int minute = 0) => Core.Clock.StartOf(Day(fromToday)).AddHours(hour).AddMinutes(minute);
+    public DateTimeOffset At(int fromToday, int hour, int minute = 0) => Core.Clock.StartOf(Day(fromToday)).AddHours(hour).AddMinutes(minute).ToUniversalTime();
 
     public async Task<T?> ScalarAsync<T>(string sql, params object[] parameters)
     {

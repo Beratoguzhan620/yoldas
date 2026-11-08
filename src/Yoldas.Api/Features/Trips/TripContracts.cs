@@ -21,7 +21,8 @@ public sealed record TripRequest(
 /// <summary>What can change before the trip. The route cannot: offer a new trip for a different one.</summary>
 public sealed record TripChangeRequest(DateTimeOffset DepartureAt, int Seats, decimal PricePerSeat, bool InstantBook = false, string? Notes = null);
 
-public sealed record DriverResponse(Guid Id, string Name, DateTimeOffset MemberSince);
+/// <summary>The driver, with the stars passengers gave them.</summary>
+public sealed record DriverResponse(Guid Id, string Name, DateTimeOffset MemberSince, double? Rating, int RatingCount);
 
 public sealed record CarResponse(string Make, string Model, string Colour, string? Plate);
 
