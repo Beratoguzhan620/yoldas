@@ -30,6 +30,15 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<DateTimeOffset?>("BoardedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("boarded_at");
+
+                    b.Property<string>("BoardingCode")
+                        .HasMaxLength(4)
+                        .HasColumnType("character varying(4)")
+                        .HasColumnName("boarding_code");
+
                     b.Property<string>("CancelledBy")
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)")
@@ -137,6 +146,10 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .HasColumnType("xid")
                         .HasColumnName("xmin");
 
+                    b.Property<int>("WrongCodes")
+                        .HasColumnType("integer")
+                        .HasColumnName("wrong_codes");
+
                     b.HasKey("Id")
                         .HasName("pk_bookings");
 
@@ -168,6 +181,67 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Yoldas.Core.Reviews.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("author_id");
+
+                    b.Property<Guid>("BookingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("booking_id");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("comment");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Of")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("of");
+
+                    b.Property<int>("Stars")
+                        .HasColumnType("integer")
+                        .HasColumnName("stars");
+
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("subject_id");
+
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("trip_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_reviews");
+
+                    b.HasIndex("AuthorId")
+                        .HasDatabaseName("ix_reviews_author_id");
+
+                    b.HasIndex("BookingId", "AuthorId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_reviews_booking_id_author_id");
+
+                    b.HasIndex("SubjectId", "Of", "CreatedAt")
+                        .HasDatabaseName("ix_reviews_subject_id_of_created_at");
+
+                    b.ToTable("reviews", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_reviews_stars", "stars BETWEEN 1 AND 5");
+                        });
+                });
+
             modelBuilder.Entity("Yoldas.Core.Trips.Trip", b =>
                 {
                     b.Property<Guid>("Id")
@@ -190,6 +264,10 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("driver_id");
 
+                    b.Property<DateTimeOffset?>("FinishedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("finished_at");
+
                     b.Property<bool>("InstantBook")
                         .HasColumnType("boolean")
                         .HasColumnName("instant_book");
@@ -197,6 +275,26 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                     b.Property<int>("LengthMeters")
                         .HasColumnType("integer")
                         .HasColumnName("length_meters");
+
+                    b.Property<DateTimeOffset?>("LiveAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("live_at");
+
+                    b.Property<double?>("LiveKmPerHour")
+                        .HasColumnType("double precision")
+                        .HasColumnName("live_km_per_hour");
+
+                    b.Property<int?>("LiveMetersAlong")
+                        .HasColumnType("integer")
+                        .HasColumnName("live_meters_along");
+
+                    b.Property<int?>("LiveMetersOff")
+                        .HasColumnType("integer")
+                        .HasColumnName("live_meters_off");
+
+                    b.Property<Point>("LivePosition")
+                        .HasColumnType("geography (point, 4326)")
+                        .HasColumnName("live_position");
 
                     b.Property<string>("Notes")
                         .IsRequired()
@@ -216,6 +314,10 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                     b.Property<int>("Seats")
                         .HasColumnType("integer")
                         .HasColumnName("seats");
+
+                    b.Property<DateTimeOffset?>("StartedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("started_at");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -244,6 +346,10 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_trips_path");
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Path"), "gist");
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_trips_open")
+                        .HasFilter("status IN ('Scheduled', 'Started')");
 
                     b.HasIndex("VehicleId")
                         .HasDatabaseName("ix_trips_vehicle_id");
@@ -308,11 +414,27 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("display_name");
 
+                    b.Property<int>("DriverRatingCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("driver_rating_count");
+
+                    b.Property<int>("DriverRatingSum")
+                        .HasColumnType("integer")
+                        .HasColumnName("driver_rating_sum");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(254)
                         .HasColumnType("character varying(254)")
                         .HasColumnName("email");
+
+                    b.Property<int>("PassengerRatingCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("passenger_rating_count");
+
+                    b.Property<int>("PassengerRatingSum")
+                        .HasColumnType("integer")
+                        .HasColumnName("passenger_rating_sum");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -407,6 +529,30 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_bookings_trips_trip_id");
+                });
+
+            modelBuilder.Entity("Yoldas.Core.Reviews.Review", b =>
+                {
+                    b.HasOne("Yoldas.Core.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_reviews_users_author_id");
+
+                    b.HasOne("Yoldas.Core.Bookings.Booking", null)
+                        .WithMany()
+                        .HasForeignKey("BookingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_reviews_bookings_booking_id");
+
+                    b.HasOne("Yoldas.Core.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_reviews_users_subject_id");
                 });
 
             modelBuilder.Entity("Yoldas.Core.Trips.Trip", b =>

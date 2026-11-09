@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Yoldas.Core.Bookings;
+using Yoldas.Core.Reviews;
 using Yoldas.Core.Trips;
 using Yoldas.Core.Users;
 
@@ -17,6 +18,8 @@ public sealed class YoldasDbContext(DbContextOptions<YoldasDbContext> options) :
     public DbSet<TripStop> TripStops => Set<TripStop>();
 
     public DbSet<Booking> Bookings => Set<Booking>();
+
+    public DbSet<Review> Reviews => Set<Review>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

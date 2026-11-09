@@ -18,6 +18,11 @@ internal static class BookingQueries
         var vehicle = await db.Vehicles.AsNoTracking().SingleAsync(v => v.Id == trip.VehicleId, ct);
         var names = await NamesAsync(db, [booking.DriverId, booking.PassengerId], ct);
         var isDriver = booking.DriverId == viewerId;
+        var reviews = await db.Reviews.AsNoTracking().Where(r => r.BookingId == bookingId).ToListAsync(ct);
+        var mine = reviews.SingleOrDefault(r => r.AuthorId == viewerId);
+        var theirs = reviews.SingleOrDefault(r => r.AuthorId != viewerId);
+        BookingReview? AsReview(Core.Reviews.Review? r) => r is null ? null : new BookingReview(r.Stars, r.Comment, r.CreatedAt);
+        var started = trip.Status == TripStatus.Started && booking.Status == BookingStatus.Confirmed;
         return new BookingResponse(
             booking.Id, TripOf(trip), new PersonResponse(booking.DriverId, names[booking.DriverId]), new PersonResponse(booking.PassengerId, names[booking.PassengerId]),
             TripQueries.Car(vehicle, showPlate: isDriver || booking.Holds), booking.Seats,
@@ -26,7 +31,12 @@ internal static class BookingQueries
             TripQueries.Km(booking.ToMeters - booking.FromMeters), Money.FromMinor(booking.PricePerSeatMinor), Money.FromMinor(booking.TotalMinor), booking.Status,
             booking.Message, booking.Reason, booking.CancelledBy, booking.LateCancellation, booking.RequestedAt, booking.RespondBy, booking.ConfirmedAt, isDriver,
             isDriver && booking.Status == BookingStatus.Requested && now < booking.RespondBy,
-            booking.IsOpen && now < booking.PickupAt);
+            booking.IsOpen && now < booking.PickupAt,
+            !isDriver && booking.Status == BookingStatus.Confirmed ? booking.BoardingCode : null,
+            booking.BoardedAt,
+            isDriver && started,
+            isDriver && started && ((trip.LiveMetersAlong ?? 0) > booking.FromMeters || now >= booking.PickupAt + Booking.NoShowAfter),
+            new BookingReviews(mine is null && booking.CanBeReviewed(now), AsReview(mine), AsReview(theirs)));
     }
 
     public static async Task<IReadOnlyList<BookingSummary>> MineAsync(YoldasDbContext db, Guid passengerId, bool past, DateTimeOffset now, CancellationToken ct)
@@ -54,6 +64,9 @@ internal static class BookingQueries
             ?? throw new DomainException(ErrorCodes.NotFound, "There is no trip of yours with this id.");
         var bookings = await db.Bookings.AsNoTracking().Where(b => b.TripId == tripId).OrderBy(b => b.FromMeters).ThenBy(b => b.RequestedAt).ToListAsync(ct);
         var names = await NamesAsync(db, bookings.Select(b => b.PassengerId), ct);
+        var passengerIds = bookings.Select(b => b.PassengerId).Distinct().ToList();
+        var ratings = await db.Users.AsNoTracking().Where(u => passengerIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, u => Core.Users.User.Average(u.PassengerRatingSum, u.PassengerRatingCount), ct);
         var holding = bookings.Where(b => b.Holds).Select(b => b.Span).ToList();
         var stops = trip.Stops.OrderBy(s => s.Index).ToList();
         var legs = stops.Zip(stops.Skip(1))
@@ -61,7 +74,7 @@ internal static class BookingQueries
             .ToList();
         return new TripPassengersResponse(
             [.. bookings.Select(b => new PassengerResponse(
-                b.Id, new PersonResponse(b.PassengerId, names[b.PassengerId]), b.Seats, b.PickupNear, TripQueries.Km(b.FromMeters), b.PickupAt, b.DropoffNear,
+                b.Id, new PersonResponse(b.PassengerId, names[b.PassengerId]), ratings[b.PassengerId], b.Seats, b.PickupNear, TripQueries.Km(b.FromMeters), b.PickupAt, b.DropoffNear,
                 TripQueries.Km(b.ToMeters), Money.FromMinor(b.TotalMinor), b.Status, b.Message, b.RespondBy))],
             legs);
     }

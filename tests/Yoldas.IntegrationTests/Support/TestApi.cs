@@ -43,6 +43,15 @@ public static class TestApi
         return new Person(factory, await response.ReadAsync<SessionDto>());
     }
 
+    /// <summary>Signs in again, for tests that move the clock past the first token's life.</summary>
+    public static async Task<Person> SignInAsync(this ApiFactory factory, string email)
+    {
+        using var anonymous = factory.CreateClient();
+        var response = await anonymous.PostAsJsonAsync("/api/auth/login", new { email, password = Password });
+        response.EnsureSuccessStatusCode();
+        return new Person(factory, await response.ReadAsync<SessionDto>());
+    }
+
     public static readonly object[] SamsunToAnkara =
     [
         new { name = "Samsun Otogar", latitude = 41.2601, longitude = 36.2847 },

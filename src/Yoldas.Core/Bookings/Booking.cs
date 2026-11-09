@@ -95,6 +95,18 @@ public sealed class Booking
 
     public DateTimeOffset? ClosedAt { get; private set; }
 
+    /// <summary>Four digits on the passenger's screen; the driver types them in as they get in.</summary>
+    public string? BoardingCode { get; private set; }
+
+    public int WrongCodes { get; private set; }
+
+    public DateTimeOffset? BoardedAt { get; private set; }
+
+    /// <summary>The driver may mark a passenger as not having come this long after the time the car was due.</summary>
+    public static readonly TimeSpan NoShowAfter = TimeSpan.FromMinutes(15);
+
+    public const int CodeTries = 5;
+
     public bool Holds => Status is BookingStatus.Confirmed or BookingStatus.Boarded;
 
     public bool IsOpen => Status is BookingStatus.Requested or BookingStatus.Confirmed;
@@ -138,7 +150,7 @@ public sealed class Booking
             PickupAt = pickupAt, DropoffAt = trip.PassesAt(dropoff.MetersAlong), PricePerSeatMinor = trip.PriceFor(pickup.MetersAlong, dropoff.MetersAlong),
             Message = Text.CleanParagraphs(message, MessageMax, "A message"),
             Status = instant ? BookingStatus.Confirmed : BookingStatus.Requested, RequestedAt = now, RespondBy = respondBy,
-            ConfirmedAt = instant ? now : null,
+            ConfirmedAt = instant ? now : null, BoardingCode = instant ? NewCode(null) : null,
         };
     }
 
@@ -153,7 +165,78 @@ public sealed class Booking
 
         Status = BookingStatus.Confirmed;
         ConfirmedAt = now;
+        BoardingCode = NewCode(null);
     }
+
+    /// <summary>The passenger gets in: the driver types in the code from their screen, while the trip is under way.</summary>
+    public void Board(Guid by, string? code, Trip trip, DateTimeOffset now)
+    {
+        RequireDriver(by, "The driver types in your code when you get in.");
+        Expect(BookingStatus.Confirmed, "Only a confirmed seat can be boarded.");
+        if (trip.Status != TripStatus.Started)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "Start the trip first.");
+        }
+
+        if (string.Equals(code?.Trim(), BoardingCode, StringComparison.Ordinal))
+        {
+            WrongCodes = 0;
+            Status = BookingStatus.Boarded;
+            BoardedAt = now;
+            return;
+        }
+
+        if (++WrongCodes >= CodeTries)
+        {
+            WrongCodes = 0;
+            BoardingCode = NewCode(BoardingCode);
+            throw new DomainException(ErrorCodes.WrongCode, "Too many wrong codes. A new code is on the passenger's screen.");
+        }
+
+        throw new DomainException(ErrorCodes.WrongCode, $"That code is not right. {CodeTries - WrongCodes} tries left.");
+    }
+
+    /// <summary>
+    /// The passenger did not come: allowed once the car has passed the pickup, or a quarter of an hour after it was
+    /// due. It shows on the passenger's profile.
+    /// </summary>
+    public void NoShow(Guid by, Trip trip, DateTimeOffset now)
+    {
+        RequireDriver(by, "Only the driver marks who did not come.");
+        Expect(BookingStatus.Confirmed, "Only a confirmed seat nobody boarded can be marked.");
+        if (trip.Status != TripStatus.Started)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "Start the trip first.");
+        }
+
+        var passed = trip.LiveMetersAlong is { } along && along > FromMeters;
+        if (!passed && now < PickupAt + NoShowAfter)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "Wait a quarter of an hour past the pickup time, or until the car has passed the pickup.");
+        }
+
+        Close(BookingStatus.NoShow, "Did not come to the pickup.", now);
+    }
+
+    /// <summary>The trip ended: whoever got in has made the trip; a confirmed seat nobody boarded is a no-show.</summary>
+    public void TripFinished(DateTimeOffset now)
+    {
+        switch (Status)
+        {
+            case BookingStatus.Boarded:
+                Close(BookingStatus.Completed, string.Empty, now);
+                break;
+            case BookingStatus.Confirmed:
+                Close(BookingStatus.NoShow, "Not on board when the trip ended.", now);
+                break;
+            case BookingStatus.Requested:
+                Close(BookingStatus.Expired, "The trip took place without an answer.", now);
+                break;
+        }
+    }
+
+    /// <summary>Both sides may review each other in the two weeks after a ride that took place.</summary>
+    public bool CanBeReviewed(DateTimeOffset now) => Status == BookingStatus.Completed && now < ClosedAt + Reviews.Review.Window;
 
     public void Decline(Guid by, string? reason, DateTimeOffset now)
     {
@@ -235,4 +318,16 @@ public sealed class Booking
     private static string Nearest(Trip trip, int meters) => trip.Stops.OrderBy(s => Math.Abs(s.MetersAlong - meters)).First().Name;
 
     private static DateTimeOffset Min(DateTimeOffset a, DateTimeOffset b) => a < b ? a : b;
+
+    private static string NewCode(string? replacing)
+    {
+        string code;
+        do
+        {
+            code = System.Security.Cryptography.RandomNumberGenerator.GetInt32(0, 10_000).ToString("D4", System.Globalization.CultureInfo.InvariantCulture);
+        }
+        while (code == replacing);
+
+        return code;
+    }
 }

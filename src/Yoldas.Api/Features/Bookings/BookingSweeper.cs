@@ -10,9 +10,12 @@ public sealed class SweeperOptions
     public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(30);
 }
 
-public sealed record SweepPass(int Expired);
+public sealed record SweepPass(int Expired, int TripsClosed);
 
-/// <summary>Lets requests lapse when the driver does not answer. Safe on several instances: rows carry a version.</summary>
+/// <summary>
+/// Lets requests lapse when the driver does not answer, cancels trips that never started (as the driver's), and
+/// finishes trips nobody finished. Safe on several instances: rows carry a version.
+/// </summary>
 public sealed partial class BookingSweeper(IServiceScopeFactory scopes, ILogger<BookingSweeper> logger)
 {
     public async Task<SweepPass> RunOnceAsync(CancellationToken ct = default)
@@ -20,16 +23,23 @@ public sealed partial class BookingSweeper(IServiceScopeFactory scopes, ILogger<
         await using var scope = scopes.CreateAsyncScope();
         var bookings = scope.ServiceProvider.GetRequiredService<BookingService>();
         var expired = await bookings.ExpireAsync(ct);
-        if (expired > 0)
+        var closed = await scope.ServiceProvider.GetRequiredService<Live.TripDayService>().LapseAsync(ct);
+        var live = scope.ServiceProvider.GetRequiredService<Live.LivePublisher>();
+        foreach (var trip in closed)
         {
-            LogPass(logger, expired);
+            await live.PublishAsync(trip);
         }
 
-        return new SweepPass(expired);
+        if (expired + closed.Count > 0)
+        {
+            LogPass(logger, expired, closed.Count);
+        }
+
+        return new SweepPass(expired, closed.Count);
     }
 
-    [LoggerMessage(Level = LogLevel.Information, Message = "Sweep: {Expired} requests lapsed")]
-    private static partial void LogPass(ILogger logger, int expired);
+    [LoggerMessage(Level = LogLevel.Information, Message = "Sweep: {Expired} requests lapsed, {Trips} trips cancelled or finished by the clock")]
+    private static partial void LogPass(ILogger logger, int expired, int trips);
 }
 
 public sealed partial class SweeperWorker(BookingSweeper sweeper, Microsoft.Extensions.Options.IOptions<SweeperOptions> options, ILogger<SweeperWorker> logger) : BackgroundService

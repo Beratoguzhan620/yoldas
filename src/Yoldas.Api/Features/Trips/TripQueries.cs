@@ -51,7 +51,8 @@ internal static class TripQueries
         position.Latitude, position.Longitude, Km(position.MetersAlong), Km(position.MetersOff),
         trip.Stops.OrderBy(s => Math.Abs(s.MetersAlong - position.MetersAlong)).First().Name, trip.PassesAt(position.MetersAlong));
 
-    public static DriverResponse Driver(User user) => new(user.Id, user.DisplayName, user.CreatedAt);
+    public static DriverResponse Driver(User user) =>
+        new(user.Id, user.DisplayName, user.CreatedAt, User.Average(user.DriverRatingSum, user.DriverRatingCount), user.DriverRatingCount);
 
     public static CarResponse Car(Vehicle vehicle, bool showPlate) => new(vehicle.Make, vehicle.Model, vehicle.Colour, showPlate ? vehicle.Plate : null);
 

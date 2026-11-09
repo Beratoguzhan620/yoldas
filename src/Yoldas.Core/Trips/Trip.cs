@@ -95,6 +95,24 @@ public sealed class Trip
 
     public DateTimeOffset? CancelledAt { get; private set; }
 
+    public DateTimeOffset? StartedAt { get; private set; }
+
+    public DateTimeOffset? FinishedAt { get; private set; }
+
+    /// <summary>
+    /// Where the car was last, while the trip is under way. Only the latest position is kept, and it is cleared when
+    /// the trip ends: the route is the driver's plan, the trail is nobody's business.
+    /// </summary>
+    public Point? LivePosition { get; private set; }
+
+    public int? LiveMetersAlong { get; private set; }
+
+    public int? LiveMetersOff { get; private set; }
+
+    public double? LiveKmPerHour { get; private set; }
+
+    public DateTimeOffset? LiveAt { get; private set; }
+
     public Route Route => _route ??= new Route([.. _stops.OrderBy(s => s.Index).Select(s => s.Location)]);
 
     public TimeSpan Duration => DurationFor(LengthMeters);
@@ -196,6 +214,95 @@ public sealed class Trip
         var share = (double)(toMeters - fromMeters) / LengthMeters;
         var lira = Math.Round(PricePerSeatMinor * share / 100, MidpointRounding.AwayFromZero);
         return Math.Clamp((long)lira * 100, Math.Min(MinPriceMinor, PricePerSeatMinor), PricePerSeatMinor);
+    }
+
+    /// <summary>A driver starts the trip from half an hour before the departure until three hours after it.</summary>
+    public static readonly TimeSpan StartEarly = TimeSpan.FromMinutes(30);
+
+    public static readonly TimeSpan StartLate = TimeSpan.FromHours(3);
+
+    /// <summary>Farther than this from the route, the car is off it: the times shown are only a guess.</summary>
+    public const int OffRouteMeters = 3_000;
+
+    public void Start(DateTimeOffset now)
+    {
+        RequireScheduled("Only a scheduled trip can start.");
+        if (now < DepartureAt - StartEarly || now > DepartureAt + StartLate)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "A trip starts from half an hour before its departure until three hours after.");
+        }
+
+        Status = TripStatus.Started;
+        StartedAt = now;
+    }
+
+    public void Finish(DateTimeOffset now)
+    {
+        if (Status != TripStatus.Started)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "Only a trip under way can finish.");
+        }
+
+        Status = TripStatus.Finished;
+        FinishedAt = now;
+        LivePosition = null;
+        LiveMetersAlong = null;
+        LiveMetersOff = null;
+        LiveKmPerHour = null;
+        LiveAt = null;
+    }
+
+    /// <summary>
+    /// The car's position, as the driver's phone reports it. It is placed on the route; the car never goes back along
+    /// it, so a jittery fix behind the last one does not undo progress. The speed follows the last reports and keeps
+    /// the times for the stops ahead honest.
+    /// </summary>
+    public void Report(double latitude, double longitude, DateTimeOffset now)
+    {
+        if (Status != TripStatus.Started)
+        {
+            throw new DomainException(ErrorCodes.InvalidState, "Positions are shared only while the trip is under way.");
+        }
+
+        var point = GeoPoint.At(latitude, longitude);
+        var position = Route.Locate(point);
+        var along = Math.Max(position.MetersAlong, LiveMetersAlong ?? 0);
+        if (LiveAt is { } last && LiveMetersAlong is { } before && now > last)
+        {
+            var observed = (along - before) / 1000.0 / (now - last).TotalHours;
+            if ((now - last) >= TimeSpan.FromSeconds(5) && observed > 0)
+            {
+                var blended = ((LiveKmPerHour ?? AverageKmPerHour) + observed) / 2;
+                LiveKmPerHour = Math.Round(Math.Clamp(blended, 15, 130), 1);
+            }
+        }
+
+        LivePosition = point;
+        LiveMetersAlong = along;
+        LiveMetersOff = position.MetersOff;
+        LiveKmPerHour ??= AverageKmPerHour;
+        LiveAt = now;
+    }
+
+    /// <summary>
+    /// When the car should reach a point of the route: by the timetable before the trip starts, from where it is now
+    /// once it is under way, or null once it has passed.
+    /// </summary>
+    public DateTimeOffset? Reaches(int metersAlong, DateTimeOffset now)
+    {
+        if (Status != TripStatus.Started || LiveMetersAlong is not { } along || LiveAt is not { } at)
+        {
+            return Status == TripStatus.Scheduled ? PassesAt(metersAlong) : null;
+        }
+
+        if (along >= metersAlong)
+        {
+            return null;
+        }
+
+        var hours = (metersAlong - along) / 1000.0 / (LiveKmPerHour ?? AverageKmPerHour);
+        var eta = at + TimeSpan.FromHours(hours);
+        return eta < now ? now : eta;
     }
 
     public void Cancel(DateTimeOffset now)

@@ -20,6 +20,18 @@ public sealed class User
 
     public DateTimeOffset CreatedAt { get; private set; }
 
+    /// <summary>Stars from passengers.</summary>
+    public int DriverRatingSum { get; private set; }
+
+    public int DriverRatingCount { get; private set; }
+
+    /// <summary>Stars from drivers.</summary>
+    public int PassengerRatingSum { get; private set; }
+
+    public int PassengerRatingCount { get; private set; }
+
+    public static double? Average(int sum, int count) => count == 0 ? null : Math.Round((double)sum / count, 1);
+
     public static User Register(string email, string displayName, DateTimeOffset now)
     {
         var name = displayName.Trim();
