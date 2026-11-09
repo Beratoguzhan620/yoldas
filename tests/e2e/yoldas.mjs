@@ -124,7 +124,7 @@ await step("the passenger finds the trip from Samsun to Çorum and sees their sh
   await place(phone, "To", "corum", "Çorum");
   await phone.getByLabel("Day").fill(day(1));
   await phone.getByRole("button", { name: "Find a ride" }).click();
-  const card = phone.locator(".trip-card").filter({ hasText: driver.name });
+  const card = phone.locator(`.trip-card[href^="/t/${tripId}"]`);
   await card.waitFor();
   // Samsun to Çorum is a little under half of the route, so a little under half of 400 TL.
   const price = Number((await card.locator(".price").innerText()).replace(/\D/g, ""));
