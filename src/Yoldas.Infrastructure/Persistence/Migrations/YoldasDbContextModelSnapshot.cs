@@ -24,6 +24,150 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
             NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "postgis");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Yoldas.Core.Bookings.Booking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("CancelledBy")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("cancelled_by");
+
+                    b.Property<DateTimeOffset?>("ClosedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("closed_at");
+
+                    b.Property<DateTimeOffset?>("ConfirmedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("confirmed_at");
+
+                    b.Property<Guid>("DriverId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("driver_id");
+
+                    b.Property<Point>("Dropoff")
+                        .IsRequired()
+                        .HasColumnType("geography (point, 4326)")
+                        .HasColumnName("dropoff");
+
+                    b.Property<DateTimeOffset>("DropoffAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("dropoff_at");
+
+                    b.Property<string>("DropoffNear")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)")
+                        .HasColumnName("dropoff_near");
+
+                    b.Property<int>("FromMeters")
+                        .HasColumnType("integer")
+                        .HasColumnName("from_meters");
+
+                    b.Property<bool>("LateCancellation")
+                        .HasColumnType("boolean")
+                        .HasColumnName("late_cancellation");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("message");
+
+                    b.Property<Guid>("PassengerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("passenger_id");
+
+                    b.Property<Point>("Pickup")
+                        .IsRequired()
+                        .HasColumnType("geography (point, 4326)")
+                        .HasColumnName("pickup");
+
+                    b.Property<DateTimeOffset>("PickupAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("pickup_at");
+
+                    b.Property<string>("PickupNear")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)")
+                        .HasColumnName("pickup_near");
+
+                    b.Property<long>("PricePerSeatMinor")
+                        .HasColumnType("bigint")
+                        .HasColumnName("price_per_seat_minor");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("reason");
+
+                    b.Property<DateTimeOffset>("RequestedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("requested_at");
+
+                    b.Property<DateTimeOffset>("RespondBy")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("respond_by");
+
+                    b.Property<int>("Seats")
+                        .HasColumnType("integer")
+                        .HasColumnName("seats");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("status");
+
+                    b.Property<int>("ToMeters")
+                        .HasColumnType("integer")
+                        .HasColumnName("to_meters");
+
+                    b.Property<Guid>("TripId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("trip_id");
+
+                    b.Property<uint>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("xid")
+                        .HasColumnName("xmin");
+
+                    b.HasKey("Id")
+                        .HasName("pk_bookings");
+
+                    b.HasIndex("DriverId")
+                        .HasDatabaseName("ix_bookings_driver_id");
+
+                    b.HasIndex("RespondBy")
+                        .HasDatabaseName("ix_bookings_respond_by")
+                        .HasFilter("status = 'Requested'");
+
+                    b.HasIndex("PassengerId", "PickupAt")
+                        .HasDatabaseName("ix_bookings_passenger_id_pickup_at");
+
+                    b.HasIndex("TripId", "PassengerId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_bookings_one_per_passenger")
+                        .HasFilter("status IN ('Requested', 'Confirmed', 'Boarded')");
+
+                    b.HasIndex("TripId", "Status")
+                        .HasDatabaseName("ix_bookings_trip_id_status");
+
+                    b.ToTable("bookings", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_bookings_price", "price_per_seat_minor > 0");
+
+                            t.HasCheckConstraint("ck_bookings_seats", "seats >= 1");
+
+                            t.HasCheckConstraint("ck_bookings_span", "from_meters >= 0 AND to_meters > from_meters");
+                        });
+                });
+
             modelBuilder.Entity("Yoldas.Core.Trips.Trip", b =>
                 {
                     b.Property<Guid>("Id")
@@ -239,6 +383,30 @@ namespace Yoldas.Infrastructure.Persistence.Migrations
                         {
                             t.HasCheckConstraint("ck_vehicles_seats", "passenger_seats BETWEEN 1 AND 8");
                         });
+                });
+
+            modelBuilder.Entity("Yoldas.Core.Bookings.Booking", b =>
+                {
+                    b.HasOne("Yoldas.Core.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_bookings_users_driver_id");
+
+                    b.HasOne("Yoldas.Core.Users.User", null)
+                        .WithMany()
+                        .HasForeignKey("PassengerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_bookings_users_passenger_id");
+
+                    b.HasOne("Yoldas.Core.Trips.Trip", null)
+                        .WithMany()
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_bookings_trips_trip_id");
                 });
 
             modelBuilder.Entity("Yoldas.Core.Trips.Trip", b =>

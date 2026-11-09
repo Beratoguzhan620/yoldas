@@ -4,6 +4,7 @@ using System.Text.Unicode;
 using System.Threading.RateLimiting;
 using Yoldas.Api.Common;
 using Yoldas.Api.Features.Auth;
+using Yoldas.Api.Features.Bookings;
 using Yoldas.Api.Features.Trips;
 using Yoldas.Api.Logging;
 using Yoldas.Infrastructure;
@@ -31,6 +32,14 @@ if (string.IsNullOrWhiteSpace(connectionString))
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddYoldasPersistence(connectionString);
 builder.Services.AddYoldasAuth(builder.Configuration);
+
+builder.Services.AddScoped<BookingService>();
+builder.Services.Configure<SweeperOptions>(builder.Configuration.GetSection(SweeperOptions.Section));
+builder.Services.AddSingleton<BookingSweeper>();
+if (builder.Configuration.GetValue($"{SweeperOptions.Section}:Enabled", true))
+{
+    builder.Services.AddHostedService<SweeperWorker>();
+}
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -98,6 +107,7 @@ app.MapScalarApiReference(options => options
 app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
 app.MapAuthEndpoints();
 app.MapTripEndpoints();
+app.MapBookingEndpoints();
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
 app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });

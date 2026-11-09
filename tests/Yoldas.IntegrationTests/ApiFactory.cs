@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Time.Testing;
+using Yoldas.Api.Features.Bookings;
 using Yoldas.IntegrationTests.Support;
 using Npgsql;
 using Testcontainers.PostgreSql;
@@ -29,12 +30,16 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("Database:MigrateOnStartup", "true");
         builder.UseSetting("Jwt:SigningKey", SigningKey);
         builder.UseSetting("Auth:AttemptsPerMinute", "100000");
+        // Tests run the sweeper themselves, one pass at a time.
+        builder.UseSetting("Sweeper:Enabled", "false");
         builder.ConfigureTestServices(services =>
         {
             services.RemoveAll<TimeProvider>();
             services.AddSingleton<TimeProvider>(Clock);
         });
     }
+
+    public Task<SweepPass> SweepAsync() => Services.GetRequiredService<BookingSweeper>().RunOnceAsync();
 
     /// <summary>Today in Turkey on the test clock, plus some days.</summary>
     public DateOnly Day(int fromToday) => Core.Clock.Today(Clock.GetUtcNow()).AddDays(fromToday);

@@ -110,9 +110,9 @@ internal static partial class TripEndpoints
                 .OrderBy(t => t.DepartureAt);
         var trips = await query.Take(100).ToListAsync(ct);
         var people = await TripQueries.PeopleAsync(db, trips, ct);
-        var left = await TripQueries.SeatsLeftAsync(db, trips.Select(t => t.Id).ToList(), ct);
+        var taken = await TripQueries.TakenAsync(db, trips.Select(t => t.Id).ToList(), ct);
         return TypedResults.Ok<IReadOnlyList<TripSummary>>([.. trips.Select(t =>
-            TripQueries.Summary(t, people.Drivers[t.DriverId], people.Vehicles[t.VehicleId], left.GetValueOrDefault(t.Id, t.Seats), null))]);
+            TripQueries.Summary(t, people.Drivers[t.DriverId], people.Vehicles[t.VehicleId], TripQueries.SeatsLeft(t, TripQueries.TakenOn(taken, t.Id)), null))]);
     }
 
     private static async Task<Results<Created<TripResponse>, ValidationProblem>> Offer(
@@ -142,18 +142,20 @@ internal static partial class TripEndpoints
         var trip = await OwnAsync(db, tripId, user.UserId(), ct);
         var vehicle = await db.Vehicles.AsNoTracking().SingleAsync(v => v.Id == trip.VehicleId, ct);
         var now = clock.GetUtcNow();
-        trip.Change(vehicle.PassengerSeats, request.DepartureAt, request.Seats, Money.ToMinor(request.PricePerSeat, "The price"), request.InstantBook, request.Notes, now);
+        var hasPassengers = await db.Bookings.AnyAsync(
+            b => b.TripId == tripId && (b.Status == Core.Bookings.BookingStatus.Requested || b.Status == Core.Bookings.BookingStatus.Confirmed), ct);
+        trip.Change(
+            vehicle.PassengerSeats, request.DepartureAt, request.Seats, Money.ToMinor(request.PricePerSeat, "The price"), request.InstantBook, request.Notes, now,
+            hasPassengers);
         await SaveAsync(db, ct);
         return TypedResults.Ok(await TripQueries.DetailAsync(db, tripId, trip.DriverId, null, null, now, ct));
     }
 
-    private static async Task<Ok<TripResponse>> Cancel(Guid tripId, ClaimsPrincipal user, YoldasDbContext db, TimeProvider clock, CancellationToken ct)
+    private static async Task<Ok<TripResponse>> Cancel(
+        Guid tripId, ClaimsPrincipal user, Bookings.BookingService bookings, YoldasDbContext db, TimeProvider clock, CancellationToken ct)
     {
-        var trip = await OwnAsync(db, tripId, user.UserId(), ct);
-        var now = clock.GetUtcNow();
-        trip.Cancel(now);
-        await SaveAsync(db, ct);
-        return TypedResults.Ok(await TripQueries.DetailAsync(db, tripId, trip.DriverId, null, null, now, ct));
+        var trip = await bookings.CancelTripAsync(tripId, user.UserId(), ct);
+        return TypedResults.Ok(await TripQueries.DetailAsync(db, tripId, trip.DriverId, null, null, clock.GetUtcNow(), ct));
     }
 
     /// <summary>A trip the user drives; anyone else gets 404 for it, and 403 is never a hint that it exists.</summary>
@@ -166,6 +168,10 @@ internal static partial class TripEndpoints
         try
         {
             await db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException ex) when (ex.IsSeatsTaken())
+        {
+            throw new DomainException(ErrorCodes.SeatsTaken, "More seats are booked on part of the route than that. Offer at least as many.");
         }
         catch (DbUpdateConcurrencyException)
         {
