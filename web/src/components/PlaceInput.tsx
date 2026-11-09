@@ -41,14 +41,15 @@ export function PlaceInput({ label, value, onChange, placeholder, autoFocus = fa
   }
 
   function keyDown(e: React.KeyboardEvent) {
-    if (!open || found.length === 0) return;
+    if (!showing) return;
     if (e.key === "ArrowDown") { e.preventDefault(); setActive((active + 1) % found.length); }
     if (e.key === "ArrowUp") { e.preventDefault(); setActive((active - 1 + found.length) % found.length); }
     if (e.key === "Enter") { e.preventDefault(); choose(found[active]!); }
     if (e.key === "Escape") setOpen(false);
   }
 
-  const showing = open && found.length > 0;
+  // Results for an earlier text are not offered while the new one is still being looked up.
+  const showing = open && found.length > 0 && typed === text;
   return (
     <label className="place-field">
       {label}
