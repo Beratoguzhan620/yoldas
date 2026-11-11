@@ -4,7 +4,9 @@ import { api } from "../api";
 import { Rating } from "../components/Badges";
 import { MapView, type Pin } from "../components/MapView";
 import { PlaceInput } from "../components/PlaceInput";
+import { DemoPanel } from "../components/DemoPanel";
 import { Empty, Failed, Loading } from "../components/States";
+import { useMaybeAccount } from "../context";
 import { formatLongDay, formatMoney, formatTime, km, plural, today } from "../format";
 import { useLoad } from "../hooks";
 import { linkProps, navigate } from "../router";
@@ -70,6 +72,7 @@ function TripCard({ trip, from, to, on, onHover }: { trip: TripSummary; from: Sp
 export function SearchPage({ params }: { params: URLSearchParams }) {
   const from = readSpot(params, "from");
   const to = readSpot(params, "to");
+  const account = useMaybeAccount();
   const date = params.get("date") ?? "";
   const seats = Math.min(8, Math.max(1, Number(params.get("seats")) || 1));
   const sort = (sorts.find((s) => s.value === params.get("sort"))?.value ?? "Departure") as TripSort;
@@ -125,9 +128,12 @@ export function SearchPage({ params }: { params: URLSearchParams }) {
       <div className="search-grid">
         <section className="stack" aria-live="polite">
           {!ready ? (
+            <>
+            {!account && <DemoPanel compact />}
             <Empty title="Where are you going?" icon={<RouteIcon size={26} />}>
               <span className="muted">Pick where you start and where you are going. Trips that pass near both, in that order, are shown with where you would get in and out, and your share of the price.</span>
             </Empty>
+            </>
           ) : (
             <>
               <div className="page-head">

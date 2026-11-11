@@ -198,7 +198,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .auth-intro ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 440px; }
 .auth-intro li { display: flex; gap: 12px; align-items: flex-start; }
 .auth-intro li svg { flex: none; margin-top: 2px; color: #fff; }
-.auth-main { display: grid; place-items: center; padding: 32px 16px; }
+.auth-main { display: grid; place-items: center; align-content: center; gap: 16px; padding: 32px 16px; }
 .auth-card { width: 100%; max-width: 400px; display: grid; gap: 14px; padding: 28px; }
 .auth-card h1 { font-size: 22px; }
 .center-text { text-align: center; }
@@ -511,3 +511,15 @@ a.tab { display: inline-flex; align-items: center; text-decoration: none; }
   .trip-card { grid-template-columns: 1fr; }
   .trip-card .price { text-align: left; }
 }
+
+/* The public demo's accounts */
+.demo-panel { display: grid; gap: 12px; padding: 18px; width: 100%; max-width: 400px; border-color: var(--accent); }
+.demo-panel.compact { max-width: none; }
+.demo-panel h2 { font-size: 16px; }
+.demo-accounts { display: grid; gap: 8px; }
+.demo-panel.compact .demo-accounts { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.demo-account { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--text); text-align: left; cursor: pointer; font: inherit; }
+.demo-account:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.demo-account:disabled { opacity: 0.6; cursor: progress; }
+.demo-account:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.demo-icon { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); flex: none; }

@@ -1,6 +1,7 @@
 import { Coins, MapPinned, Radio } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { api, ApiError } from "../api";
+import { DemoPanel } from "../components/DemoPanel";
 import { Brand } from "../components/Shell";
 import { useApp } from "../context";
 import { linkProps, navigate } from "../router";
@@ -59,6 +60,7 @@ export function SignIn({ next }: { next?: string }) {
           <p className="small muted center-text">New here? <a {...linkProps(`/register${next ? `?next=${encodeURIComponent(next)}` : ""}`)}>Create an account</a></p>
           <p className="small muted center-text"><a {...linkProps("/")}>Look around first</a></p>
         </form>
+        <DemoPanel next={next} />
       </main>
     </div>
   );
