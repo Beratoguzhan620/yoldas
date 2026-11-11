@@ -1,0 +1,17 @@
+import { chromium } from "playwright";
+import { mkdirSync } from "node:fs";
+const OUT = process.argv[2]; mkdirSync(OUT, { recursive: true });
+const b = await chromium.launch();
+const errors = [];
+const page = async (viewport, extra = {}) => { const c = await b.newContext({ viewport, deviceScaleFactor: 1, locale: "en-GB", timezoneId: "Europe/Istanbul", ...extra }); const p = await c.newPage(); p.on("console", m => m.type() === "error" && !/tile\.openstreetmap/.test(m.text()) && errors.push(m.text())); p.on("pageerror", e => errors.push(e.message)); return p; };
+const d = await page({ width: 1360, height: 860 });
+await d.goto("http://localhost:8080/"); await d.waitForTimeout(2500); await d.screenshot({ path: OUT + "1-home.png" });
+await d.goto("http://localhost:8080/signin"); await d.waitForTimeout(1500); await d.screenshot({ path: OUT + "2-signin.png" });
+await d.getByRole("button", { name: /Ayşe Kaya/ }).click(); await d.waitForURL(/\/rides/); await d.waitForTimeout(1500); await d.screenshot({ path: OUT + "3-ayse-rides.png" });
+await d.locator(".ride-row").first().click(); await d.waitForTimeout(6000); await d.screenshot({ path: OUT + "4-ayse-live.png" });
+console.log("feed:", await d.locator(".feed").first().innerText().catch(() => "none"));
+const m = await page({ width: 390, height: 844 }, { isMobile: true, hasTouch: true });
+await m.goto("http://localhost:8080/signin"); await m.waitForTimeout(2500); await m.screenshot({ path: OUT + "5a-signin-phone.png", fullPage: true }); console.log("phone url", m.url(), (await m.locator("body").innerText()).slice(0, 300).replace(/\n/g, " / ")); await m.getByRole("button", { name: /Mehmet/ }).click({ timeout: 8000 }); await m.waitForURL(/\/drive/); await m.waitForTimeout(1500); await m.screenshot({ path: OUT + "5-mehmet-drive.png", fullPage: true });
+await m.locator(".ride-row").first().click(); await m.waitForTimeout(3000); await m.screenshot({ path: OUT + "6-mehmet-trip.png", fullPage: true });
+console.log("errors:", errors.length ? errors.join(" | ") : "none");
+await b.close();

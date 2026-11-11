@@ -1,0 +1,75 @@
+name: Tooling
+
+on:
+  push:
+    branches: ['tooling/**']
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Prepare
+        run: |
+          mkdir -p out
+          dotnet tool install --global dotnet-ef --version 10.0.14 > out/ef-install.log 2>&1 || true
+
+      - name: Restore and build
+        run: |
+          set -o pipefail
+          dotnet restore Yoldas.slnx 2>&1 | tee out/restore.log
+          dotnet build Yoldas.slnx --no-restore --configuration Release 2>&1 | tee out/build.log
+
+      - name: Add migration
+        if: hashFiles('.tooling/migration') != ''
+        run: |
+          set -o pipefail
+          NAME=$(cat .tooling/migration)
+          dotnet ef migrations add "$NAME" --project src/Yoldas.Infrastructure --startup-project src/Yoldas.Api --output-dir Persistence/Migrations --configuration Release 2>&1 | tee out/migration.log
+          mkdir -p out/migrations
+          cp -r src/Yoldas.Infrastructure/Persistence/Migrations/. out/migrations/
+          dotnet build Yoldas.slnx --configuration Release 2>&1 | tee out/build-after-migration.log
+
+      - name: Unit tests
+        if: always()
+        run: |
+          set -o pipefail
+          dotnet test tests/Yoldas.UnitTests/Yoldas.UnitTests.csproj --configuration Release --logger "console;verbosity=normal" 2>&1 | tee out/unit-tests.log
+
+      - name: Integration tests
+        if: always() && hashFiles('.tooling/migration') == ''
+        run: |
+          set -o pipefail
+          dotnet test tests/Yoldas.IntegrationTests/Yoldas.IntegrationTests.csproj --configuration Release --logger "console;verbosity=normal" 2>&1 | tee out/integration-tests.log
+
+      - name: Pending model changes
+        if: always()
+        run: |
+          set -o pipefail
+          dotnet ef migrations has-pending-model-changes --project src/Yoldas.Infrastructure --startup-project src/Yoldas.Api --configuration Release 2>&1 | tee out/pending.log
+
+      - name: Extra script
+        if: always() && hashFiles('.tooling/extra.sh') != ''
+        run: |
+          set -o pipefail
+          bash .tooling/extra.sh 2>&1 | tee out/extra.log
+
+      - name: Publish output
+        if: always()
+        run: |
+          cd out
+          echo "${GITHUB_SHA}" > SOURCE_SHA
+          git init -q
+          git config user.name "tooling"
+          git config user.email "tooling@localhost"
+          git add -A
+          git commit -q -m "output for ${GITHUB_SHA::7}"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "HEAD:refs/heads/${GITHUB_REF_NAME}-output"
