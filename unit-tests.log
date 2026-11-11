@@ -1,0 +1,71 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Yoldas.Core -> /home/runner/work/yoldas/yoldas/src/Yoldas.Core/bin/Release/net10.0/Yoldas.Core.dll
+  Yoldas.Infrastructure -> /home/runner/work/yoldas/yoldas/src/Yoldas.Infrastructure/bin/Release/net10.0/Yoldas.Infrastructure.dll
+  Yoldas.UnitTests -> /home/runner/work/yoldas/yoldas/tests/Yoldas.UnitTests/bin/Release/net10.0/Yoldas.UnitTests.dll
+Test run for /home/runner/work/yoldas/yoldas/tests/Yoldas.UnitTests/bin/Release/net10.0/Yoldas.UnitTests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.07]   Discovering: Yoldas.UnitTests
+[xUnit.net 00:00:00.12]   Discovered:  Yoldas.UnitTests
+[xUnit.net 00:00:00.15]   Starting:    Yoldas.UnitTests
+  Passed Yoldas.UnitTests.RouteTests.Along_the_second_leg_the_first_counts [13 ms]
+  Passed Yoldas.UnitTests.TripTests.A_trip_offers_as_many_seats_as_the_car_has(seats: 0) [14 ms]
+  Passed Yoldas.UnitTests.RouteTests.A_point_beside_a_leg_lands_on_it_at_the_right_distance [< 1 ms]
+  Passed Yoldas.UnitTests.TripTests.A_trip_offers_as_many_seats_as_the_car_has(seats: 5) [< 1 ms]
+  Passed Yoldas.UnitTests.TripTests.Passengers_pay_their_share_of_the_route_to_the_lira [3 ms]
+  Passed Yoldas.UnitTests.RouteTests.A_route_measures_its_legs_and_where_each_stop_is [5 ms]
+  Passed Yoldas.UnitTests.RouteTests.Points_past_either_end_land_on_the_end [< 1 ms]
+  Passed Yoldas.UnitTests.TripTests.Offering_a_trip_measures_the_route_and_times_each_stop [9 ms]
+  Passed Yoldas.UnitTests.TripTests.Seats_cost_at_most_three_lira_a_kilometre [< 1 ms]
+  Passed Yoldas.UnitTests.RouteTests.Positions_turn_back_into_coordinates [9 ms]
+  Passed Yoldas.UnitTests.RouteTests.A_route_has_two_points [< 1 ms]
+  Passed Yoldas.UnitTests.TripTests.Stops_are_checked [1 ms]
+  Passed Yoldas.UnitTests.TripTests.A_trip_leaves_between_half_an_hour_and_ninety_days_from_now [3 ms]
+  Passed Yoldas.UnitTests.TripTests.A_cancelled_trip_stays_cancelled [2 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_that_cannot_exist_are_refused(plate: "55 ABCD 123") [2 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_that_cannot_exist_are_refused(plate: "55 ABC 1") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_that_cannot_exist_are_refused(plate: "00 ABC 123") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_that_cannot_exist_are_refused(plate: "82 ABC 123") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_that_cannot_exist_are_refused(plate: "55 ABÇ 123") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.All_81_provinces_are_there_once [3 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.A_car_takes_one_to_eight_passengers [3 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_are_written_as_on_the_car(typed: "55abc123", plate: "55 ABC 123") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_are_written_as_on_the_car(typed: "06-ab-12", plate: "06 AB 12") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Plates_are_written_as_on_the_car(typed: " 34 k 4567 ", plate: "34 K 4567") [< 1 ms]
+  Passed Yoldas.UnitTests.SeatTests.Nothing_taken_means_every_seat_is_free [13 ms]
+  Passed Yoldas.UnitTests.SeatTests.A_seat_is_free_again_where_its_passenger_gets_out [2 ms]
+  Passed Yoldas.UnitTests.BookingTests.Close_to_the_pickup_the_driver_must_answer_half_an_hour_before [5 ms]
+  Passed Yoldas.UnitTests.BookingTests.Requests_are_checked [< 1 ms]
+  Passed Yoldas.UnitTests.BookingTests.A_request_takes_its_part_of_the_route_and_its_share_of_the_price [6 ms]
+  Passed Yoldas.UnitTests.BookingTests.Calling_off_a_confirmed_seat_within_a_day_is_late_for_whoever_does_it [7 ms]
+  Passed Yoldas.UnitTests.BookingTests.Only_the_driver_answers_and_only_in_time [7 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "igdir", expected: "Iğdır") [39 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "ÇANAKKALE", expected: "Çanakkale") [< 1 ms]
+  Passed Yoldas.UnitTests.BookingTests.Instant_trips_confirm_at_once [4 ms]
+  Passed Yoldas.UnitTests.GeoTests.Points_must_be_on_the_earth(lat: 91, lng: 36) [< 1 ms]
+  Passed Yoldas.UnitTests.GeoTests.Points_must_be_on_the_earth(lat: 41, lng: 181) [< 1 ms]
+  Passed Yoldas.UnitTests.GeoTests.Points_must_be_on_the_earth(lat: NaN, lng: 36) [< 1 ms]
+  Passed Yoldas.UnitTests.GeoTests.Distances_are_great_circle_kilometres [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "sams", expected: "Samsun") [4 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "carsamba", expected: "Çarşamba") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "canakkale", expected: "Çanakkale") [< 1 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.Places_match_however_they_are_typed(query: "istanbul", expected: "İstanbul") [< 1 ms]
+  Passed Yoldas.UnitTests.GeoTests.Points_are_longitude_first_like_PostGIS_and_rounded_to_a_tenth_of_a_metre [4 ms]
+  Passed Yoldas.UnitTests.PlaceAndCarTests.A_province_comes_before_its_towns_and_towns_say_where_they_are [2 ms]
+  Passed Yoldas.UnitTests.TripDayTests.A_no_show_waits_until_the_car_has_passed_or_a_quarter_of_an_hour [7 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Finishing_forgets_where_the_car_was [2 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Finishing_completes_who_boarded_and_marks_who_did_not [2 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Reviews_come_after_a_ride_that_happened_once_per_side [6 ms]
+  Passed Yoldas.UnitTests.TripDayTests.The_driver_boards_a_passenger_with_the_code_on_their_screen [5 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Five_wrong_codes_put_a_new_one_on_the_passengers_screen [1 ms]
+[xUnit.net 00:00:00.31]   Finished:    Yoldas.UnitTests
+  Passed Yoldas.UnitTests.TripDayTests.Far_from_the_route_the_car_is_off_it [< 1 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Times_ahead_follow_the_car_and_a_passed_stop_has_none [2 ms]
+  Passed Yoldas.UnitTests.TripDayTests.Positions_land_on_the_route_never_go_back_and_learn_the_speed [2 ms]
+  Passed Yoldas.UnitTests.TripDayTests.A_trip_starts_from_half_an_hour_before_its_departure_to_three_hours_after [< 1 ms]
+
+Test Run Successful.
+Total tests: 54
+     Passed: 54
+ Total time: 0.7192 Seconds

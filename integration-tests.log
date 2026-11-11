@@ -1,0 +1,564 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Yoldas.Core -> /home/runner/work/yoldas/yoldas/src/Yoldas.Core/bin/Release/net10.0/Yoldas.Core.dll
+  Yoldas.Infrastructure -> /home/runner/work/yoldas/yoldas/src/Yoldas.Infrastructure/bin/Release/net10.0/Yoldas.Infrastructure.dll
+  Yoldas.Api -> /home/runner/work/yoldas/yoldas/src/Yoldas.Api/bin/Release/net10.0/Yoldas.Api.dll
+  Yoldas.IntegrationTests -> /home/runner/work/yoldas/yoldas/tests/Yoldas.IntegrationTests/bin/Release/net10.0/Yoldas.IntegrationTests.dll
+Test run for /home/runner/work/yoldas/yoldas/tests/Yoldas.IntegrationTests/bin/Release/net10.0/Yoldas.IntegrationTests.dll (.NETCoreApp,Version=v10.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.4+50e68bbb8b (64-bit .NET 10.0.15)
+[xUnit.net 00:00:00.08]   Discovering: Yoldas.IntegrationTests
+[xUnit.net 00:00:00.12]   Discovered:  Yoldas.IntegrationTests
+[xUnit.net 00:00:00.14]   Starting:    Yoldas.IntegrationTests
+[testcontainers.org 00:00:00.15] Connected to Docker:
+  Host: unix:///var/run/docker.sock
+  Server Version: 28.0.4
+  Kernel Version: 7.0.0-1017-azure
+  API Version: 1.48
+  Operating System: Ubuntu 24.04.5 LTS
+  Total Memory: 15.61 GB
+[testcontainers.org 00:00:00.19] Searching Docker registry credential in CredHelpers
+[testcontainers.org 00:00:00.19] Searching Docker registry credential in CredsStore
+[testcontainers.org 00:00:00.19] Searching Docker registry credential in Auths
+[testcontainers.org 00:00:00.19] Searching Docker registry credential in Auths
+[testcontainers.org 00:00:00.19] Docker registry credential https://index.docker.io/v1/ found
+  Passed Yoldas.IntegrationTests.ConnectionStringTests.A_postgres_url_from_a_hosted_database_becomes_a_connection_string [5 ms]
+  Passed Yoldas.IntegrationTests.ConnectionStringTests.A_connection_string_passes_through [< 1 ms]
+[testcontainers.org 00:00:07.52] Docker image testcontainers/ryuk:0.14.0@sha256:7c1a8a9a47c780ed0f983770a662f80deb115d95cce3e2daa3d12115b8cd28f0 created
+[testcontainers.org 00:00:07.58] Docker container 3c18b9419007 created
+[testcontainers.org 00:00:07.61] Start Docker container 3c18b9419007
+[testcontainers.org 00:00:07.79] Wait for Docker container 3c18b9419007 to complete readiness checks
+[testcontainers.org 00:00:08.81] Docker container 3c18b9419007 ready
+[testcontainers.org 00:00:15.96] Docker image postgis/postgis:17-3.5-alpine created
+[testcontainers.org 00:00:15.96] Docker image postgis/postgis:17-3.5-alpine created
+[testcontainers.org 00:00:15.98] Docker container 4f855017f968 created
+[testcontainers.org 00:00:15.98] Docker container 2e28dde186ca created
+[testcontainers.org 00:00:15.98] Start Docker container 4f855017f968
+[testcontainers.org 00:00:15.98] Start Docker container 2e28dde186ca
+[testcontainers.org 00:00:16.10] Wait for Docker container 2e28dde186ca to complete readiness checks
+[testcontainers.org 00:00:16.11] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 2e28dde186ca
+[testcontainers.org 00:00:16.12] Wait for Docker container 4f855017f968 to complete readiness checks
+[testcontainers.org 00:00:16.12] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 4f855017f968
+[testcontainers.org 00:00:17.19] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 2e28dde186ca
+[testcontainers.org 00:00:17.19] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 4f855017f968
+[testcontainers.org 00:00:18.25] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 2e28dde186ca
+[testcontainers.org 00:00:18.25] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 4f855017f968
+[testcontainers.org 00:00:19.29] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 2e28dde186ca
+[testcontainers.org 00:00:19.30] Execute "pg_isready --host localhost --dbname postgres --username postgres" at Docker container 4f855017f968
+[testcontainers.org 00:00:19.33] Docker container 2e28dde186ca ready
+[testcontainers.org 00:00:19.34] Docker container 4f855017f968 ready
+[19:41:19 ERR]  Failed executing DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM __ef_migrations_history
+ORDER BY migration_id;
+[19:41:19 ERR]  Failed executing DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM __ef_migrations_history
+ORDER BY migration_id;
+[19:41:19 WRN]  No XML encryptor configured. Key {69aa14cb-c7b2-41b8-b17d-6825d27ef308} may be persisted to storage in unencrypted form.
+[19:41:19 WRN]  No XML encryptor configured. Key {7b78ac52-6633-4593-b06a-c80ef39f957a} may be persisted to storage in unencrypted form.
+[19:41:19 INF]  Application started. Press Ctrl+C to shut down.
+[19:41:19 INF]  Hosting environment: Testing
+[19:41:19 INF]  Content root path: /home/runner/work/yoldas/yoldas/src/Yoldas.Api
+[19:41:19 INF]  Application started. Press Ctrl+C to shut down.
+[19:41:19 INF]  Hosting environment: Testing
+[19:41:19 INF]  Content root path: /home/runner/work/yoldas/yoldas/src/Yoldas.Api
+[19:41:19 INF] ca7bbe95d5004c87913dadba291e22a8 Account 01a1cc20-b957-7f74-a77f-1fc31f587781 registered
+[19:41:19 INF] ca7bbe95d5004c87913dadba291e22a8 HTTP POST /api/auth/register responded 201 in 309.2811 ms
+[19:41:19 INF] dec5b1ef2a544cf08e5cc8868e7427ae HTTP PUT /api/me/vehicle responded 200 in 38.1926 ms
+[19:41:20 INF] 91069232e2484e4b91eb06570b8b01ad Trip 01a1cc20-b957-7d64-b151-80718eca0ef4 offered with 4 stops over 332.2 km
+[19:41:20 INF] 91069232e2484e4b91eb06570b8b01ad HTTP POST /api/trips responded 201 in 240.5889 ms
+[19:41:20 INF] 9d9e2ca006c548f6bf996f28479bbdbf HTTP GET /api/trips responded 200 in 59.8180 ms
+[19:41:20 INF]  Demo: 4 past rides with reviews created
+[19:41:20 INF] 50fd93a2338f4f6186f12a36de3bcfcf HTTP GET /api/trips responded 200 in 16.3361 ms
+[19:41:20 INF] 9179e2fcdd9245da943e801adf3fa74d HTTP GET /api/trips responded 200 in 3.8130 ms
+[19:41:20 INF] 0f7fd9c39fde4c9dbf6f06c154e5a9f6 HTTP GET /api/trips responded 200 in 3.1037 ms
+[19:41:20 INF] 0d9e3b3ad3294f01ab9a0cbf7e7a3a56 HTTP GET /api/trips responded 200 in 3.0654 ms
+[19:41:20 INF] bfe7735872d443028d44ed5bf4c77b39 HTTP GET /api/trips responded 200 in 3.1729 ms
+[19:41:20 INF] ec5149bd22a24566953f381a2797ba3d HTTP GET /api/trips/01a1cc20-b957-7d64-b151-80718eca0ef4 responded 200 in 6.0381 ms
+[19:41:20 INF]  Demo: 6 upcoming trips created
+[19:41:20 INF] 5835a0920d184c5f91c4f7738e941273 HTTP GET /api/places responded 200 in 13.8523 ms
+[19:41:20 INF] b91fa186aa6e49f7baedc99fcb1e3068 HTTP GET /api/places responded 200 in 0.3191 ms
+[19:41:20 INF] fe99499a34ae47a1bc597b971f818edd HTTP GET /api/trips responded 400 in 10.9005 ms
+[19:41:20 INF] d964f05369ef4818a3a1e408cbdd64ca Account 01a1cc20-b957-7f8e-9d8e-ed1f11bb1cd7 registered
+[19:41:20 INF] d964f05369ef4818a3a1e408cbdd64ca HTTP POST /api/auth/register responded 201 in 50.1015 ms
+[19:41:20 INF] 555f29999f094bd7aab4737dbfd9b73c HTTP PUT /api/me/vehicle responded 200 in 3.9622 ms
+[19:41:20 INF] db0d9ea1e26544bea3b100d7493d35ff HTTP POST /api/trips responded 400 in 4.7362 ms
+[19:41:20 INF] 021218c25dc44d33b503bc393fb661f5 HTTP POST /api/trips responded 400 in 1.5249 ms
+[19:41:20 INF] 6c632bed9f504385a93c75c5f96f7eb1 HTTP POST /api/trips responded 400 in 2.9860 ms
+[19:41:20 INF] 9f2be24218134e8289716a784b61da7d HTTP POST /api/trips responded 400 in 1.5549 ms
+[19:41:20 INF] 1f59db4d196747a5bf36fccf3d75b2e0 HTTP POST /api/trips responded 400 in 0.5574 ms
+[19:41:20 INF] ee190fda950e41d0b46437016621841f Account 01a1cc20-b957-7564-a072-c7089d9ca885 registered
+[19:41:20 INF] ee190fda950e41d0b46437016621841f HTTP POST /api/auth/register responded 201 in 55.5293 ms
+[19:41:20 INF] 41a5a3e4304445cdaa1fd70f288aef02 HTTP PUT /api/me/vehicle responded 200 in 2.7163 ms
+[19:41:20 INF] aab08333ed3f4059b99f678c3c056239 Trip 01a1cc20-b957-70eb-b92f-08c2d9f88792 offered with 4 stops over 332.2 km
+[19:41:20 INF] aab08333ed3f4059b99f678c3c056239 HTTP POST /api/trips responded 201 in 6.8536 ms
+[19:41:20 INF] 1a7a1b1b40644096a4f2d8a448e68441 Trip 01a1cc20-b957-7b27-959c-feef1fd97437 offered with 4 stops over 332.2 km
+[19:41:20 INF] 1a7a1b1b40644096a4f2d8a448e68441 HTTP POST /api/trips responded 201 in 9.5076 ms
+[19:41:20 INF] 2699de2d126b495bb0b6ec1561d6c6af Trip 01a1cc20-b957-7237-b02d-ebbadb808ae0 offered with 2 stops over 330.4 km
+[19:41:20 INF] 2699de2d126b495bb0b6ec1561d6c6af HTTP POST /api/trips responded 201 in 7.1352 ms
+[19:41:20 INF] 673fa56cec69475ba15ecaebf860c59f HTTP GET /api/trips responded 200 in 15.9015 ms
+[19:41:20 INF] 7581880cf8674a238291d86ad79c242a HTTP GET /api/trips responded 200 in 5.1649 ms
+[19:41:20 INF] cfd890c40d3342259fb54c1e412d2d9d HTTP GET /api/trips responded 200 in 4.2646 ms
+[19:41:20 INF] 16e255290e0b4600b39b78cd47441e1b HTTP POST /api/auth/login responded 200 in 105.9092 ms
+[19:41:20 INF] 14d2d72d2fdd4ada88d532bb8b4b3fe5 Account 01a1cc20-b957-7121-9c4c-bbc459d1d047 registered
+[19:41:20 INF] 14d2d72d2fdd4ada88d532bb8b4b3fe5 HTTP POST /api/auth/register responded 201 in 55.6780 ms
+[19:41:20 INF] d2d00720d85941dc92d8a1475529f2b3 HTTP POST /api/trips responded 409 in 1.9663 ms
+[19:41:20 INF] e630ceb64944448ea2ad275ab9c77d78 HTTP PUT /api/me/vehicle responded 400 in 1.4726 ms
+[19:41:20 INF] 30c5f6346673465e9bc448f1323eb47c HTTP GET /api/trips/01a1cb4f-fbd7-716d-945f-6c835e1880da/live responded 200 in 33.0278 ms
+[19:41:20 INF] ffb13c5b46ad4da1a44fa82617cadf81 HTTP GET /api/me/vehicle responded 404 in 8.2018 ms
+[19:41:20 INF] 086d2c988879489da550ef71d64ed998 HTTP PUT /api/me/vehicle responded 200 in 2.4608 ms
+[19:41:20 INF] 72097a90d4c546f885cfb8a3df770bec HTTP GET /api/me/vehicle responded 200 in 1.3159 ms
+[19:41:20 INF] 52988da85f584c80910fec7ef349bde9 Trip 01a1cc20-b957-7123-82c6-684d899ed695 offered with 4 stops over 332.2 km
+[19:41:20 INF] 52988da85f584c80910fec7ef349bde9 HTTP POST /api/trips responded 201 in 9.7077 ms
+[19:41:20 INF] caaecf7effc24692948abfc606da6520 HTTP GET /api/me responded 200 in 13.4345 ms
+[19:41:20 INF] a1d03771667248739bcfecbc4e7fd411 Account 01a1cc20-b957-7933-83c7-0d7982bf91c1 registered
+[19:41:20 INF] a1d03771667248739bcfecbc4e7fd411 HTTP POST /api/auth/register responded 201 in 52.4508 ms
+[19:41:20 INF] caa6aabcd8ae4596a5170bd5daf2e0d7 Account 01a1cc20-b957-7e71-8f18-db5b3c5bbfdb registered
+[19:41:20 INF] caa6aabcd8ae4596a5170bd5daf2e0d7 HTTP POST /api/auth/register responded 201 in 46.2129 ms
+[19:41:20 INF] 4122be12fdbf46d193b0ec6baba53618 HTTP PUT /api/me/vehicle responded 200 in 2.1376 ms
+[19:41:20 INF] dfae96be8a4f479dab4961a8ad59f422 Trip 01a1cc20-b957-70fe-86de-27e1abf0084e offered with 4 stops over 332.2 km
+[19:41:20 INF] dfae96be8a4f479dab4961a8ad59f422 HTTP POST /api/trips responded 201 in 7.0244 ms
+[19:41:20 INF] 6c12c69f3c07417aaf9e2b512935c91b HTTP PUT /api/trips/01a1cc20-b957-70fe-86de-27e1abf0084e responded 200 in 29.0271 ms
+[19:41:20 INF] 08d718952a37495da1d5a2e52d0e77cd HTTP PUT /api/trips/01a1cc20-b957-70fe-86de-27e1abf0084e responded 404 in 2.0400 ms
+[19:41:20 INF] 3c29a99510424d75912edfa443146173 HTTP POST /api/trips/01a1cc20-b957-70fe-86de-27e1abf0084e/cancel responded 404 in 14.8347 ms
+[19:41:20 INF] 56d95cb5ceda47718f3928d62b8f1aa3 HTTP POST /api/trips/01a1cc20-b957-70fe-86de-27e1abf0084e/cancel responded 200 in 22.6903 ms
+[19:41:20 INF] f34c9d52037e4c2d9b70ae54d01f2c97 HTTP POST /api/trips/01a1cc20-b957-70fe-86de-27e1abf0084e/cancel responded 409 in 3.0933 ms
+[19:41:20 INF] 2fc857e45f0245d9983dc50c1aff478f HTTP GET /api/trips responded 200 in 3.4580 ms
+[19:41:20 INF] b2109d0ae6c24576a4a4dda2d8e5671a HTTP GET /api/me/trips responded 200 in 19.7613 ms
+[19:41:20 INF] 82611a24f7864956bb8dc0d418055d16 HTTP GET /api/me/trips responded 200 in 24.5011 ms
+[19:41:20 INF] b084350087e94f138dab89d96f2c1f98 Account 01a1cc20-b957-7774-ad0b-b97e192682eb registered
+[19:41:20 INF] b084350087e94f138dab89d96f2c1f98 HTTP POST /api/auth/register responded 201 in 48.4758 ms
+[19:41:20 INF] 3b15d0f7f99b45a6927e91c12301813a HTTP PUT /api/me/vehicle responded 200 in 2.0026 ms
+[19:41:20 INF] 4d41e1be4ab34b64a0752553500c1647 Trip 01a1cc20-b957-767b-bdbd-c57431bb588b offered with 4 stops over 332.2 km
+[19:41:20 INF] 4d41e1be4ab34b64a0752553500c1647 HTTP POST /api/trips responded 201 in 7.1088 ms
+[19:41:20 INF] 722f085c03d541e8b162b2c617343292 HTTP GET /api/trips/01a1cc20-b957-767b-bdbd-c57431bb588b responded 200 in 3.2295 ms
+  Passed Yoldas.IntegrationTests.TripTests.Search_finds_trips_passing_near_both_places_in_order_and_prices_the_part_you_ride [794 ms]
+  Passed Yoldas.IntegrationTests.TripTests.Places_are_found_with_or_without_Turkish_letters_and_search_needs_both_ends [31 ms]
+  Passed Yoldas.IntegrationTests.TripTests.Offers_are_checked [73 ms]
+  Passed Yoldas.IntegrationTests.TripTests.Results_sort_by_departure_price_or_how_close_they_pass [124 ms]
+  Passed Yoldas.IntegrationTests.TripTests.A_driver_adds_a_car_before_offering_seats [108 ms]
+  Passed Yoldas.IntegrationTests.TripTests.Drivers_change_and_cancel_their_own_trips_and_cancelled_trips_leave_search [246 ms]
+  Passed Yoldas.IntegrationTests.TripTests.An_offered_trip_shows_its_stops_times_and_price_limits_and_the_plate_only_to_its_driver [74 ms]
+[19:41:21 INF] dd617838744e43b1821cfad0dcd4d685 Account 01a1cc20-b957-7859-b99b-45a92c89ed4e registered
+[19:41:21 INF] dd617838744e43b1821cfad0dcd4d685 HTTP POST /api/auth/register responded 201 in 55.5505 ms
+[19:41:21 INF] 718c6d3f722748e9bb06b5e11ccc7941 HTTP PUT /api/me/vehicle responded 200 in 2.1326 ms
+[19:41:21 INF] bf951821706a441ca9e6fb5311b246f3 Trip 01a1cc20-b957-7afa-a8b9-82286867cad0 offered with 4 stops over 332.2 km
+[19:41:21 INF] bf951821706a441ca9e6fb5311b246f3 HTTP POST /api/trips responded 201 in 7.1786 ms
+[19:41:21 INF] e5ef11f2453d406098bc9c128ff5ecd8 Account 01a1cc20-b957-7823-9d54-691ca8f7fe08 registered
+[19:41:21 INF] e5ef11f2453d406098bc9c128ff5ecd8 HTTP POST /api/auth/register responded 201 in 53.7617 ms
+[19:41:21 INF] cd50234101fe4145a00384dd8343c014 Booking 01a1cc20-b957-7d4d-8b02-81d1292acdf8 on trip 01a1cc20-b957-7afa-a8b9-82286867cad0: Confirmed, 1 seats
+[19:41:21 INF] cd50234101fe4145a00384dd8343c014 HTTP POST /api/bookings responded 201 in 88.7223 ms
+[19:41:21 INF] 20f6923ae97946eb8a77f5298a07a39e HTTP POST /api/trips/01a1cc20-b957-7afa-a8b9-82286867cad0/start responded 200 in 5.9803 ms
+[19:41:21 INF] e21ef35c299f42458fc0ef454a267990 HTTP POST /api/bookings/01a1cc20-b957-7d4d-8b02-81d1292acdf8/no-show responded 409 in 11.0929 ms
+[19:41:21 INF] 804639c468c74c30a9964f4a42c584d6 HTTP GET /api/bookings/01a1cc20-b957-7d4d-8b02-81d1292acdf8 responded 200 in 8.0292 ms
+[19:41:21 INF] c3047f6fe1294dd390bedcd1841eb848 HTTP POST /api/trips/01a1cc20-b957-7afa-a8b9-82286867cad0/position responded 200 in 6.8980 ms
+[19:41:21 INF] 429165914e6d4abe8da1eee95c8078f6 HTTP POST /api/bookings/01a1cc20-b957-7d4d-8b02-81d1292acdf8/no-show responded 200 in 13.6573 ms
+[19:41:21 INF] 185cd08fb92542c9891a3b385cfac19f HTTP GET /api/users/01a1cc20-b957-7823-9d54-691ca8f7fe08 responded 200 in 34.6656 ms
+[19:41:21 INF] 1244d95442eb4e08ac6254f89ad827ed Account 01a1cc2e-74f7-7366-9d7f-d1f7a050c24c registered
+[19:41:21 INF] 1244d95442eb4e08ac6254f89ad827ed HTTP POST /api/auth/register responded 201 in 53.6449 ms
+[19:41:21 INF] 8848f32d67f24c329d29d42991c34343 HTTP PUT /api/me/vehicle responded 200 in 2.1410 ms
+[19:41:21 INF] 00cb4ec21b254bc0b3be74d5e7ec920f Trip 01a1cc2e-74f7-7d60-a506-97398342c941 offered with 4 stops over 332.2 km
+[19:41:21 INF] 00cb4ec21b254bc0b3be74d5e7ec920f HTTP POST /api/trips responded 201 in 6.5982 ms
+[19:41:21 INF] 936b13a5fb3d4cda9c3b0b54abe9369d Account 01a1cc2e-74f7-7d88-9b3a-1439518c8695 registered
+[19:41:21 INF] 936b13a5fb3d4cda9c3b0b54abe9369d HTTP POST /api/auth/register responded 201 in 53.2281 ms
+[19:41:21 INF] 5d0827df1a824c318f5a0b8787b18aea Booking 01a1cc2e-74f7-7409-b1d3-b5401dfb98ee on trip 01a1cc2e-74f7-7d60-a506-97398342c941: Confirmed, 1 seats
+[19:41:21 INF] 5d0827df1a824c318f5a0b8787b18aea HTTP POST /api/bookings responded 201 in 9.3367 ms
+[19:41:21 INF] 145d37552c8440ed9ecd903187e429a0 HTTP POST /hubs/trips/negotiate responded 200 in 2.9983 ms
+[19:41:21 INF] bcce13c3bf424fc796f109ab0e908d2b HTTP GET /hubs/trips responded 200 in 5.0394 ms
+[19:41:21 INF] 440c9dfe4a3c44858127ee09c947d436 HTTP POST /hubs/trips responded 200 in 0.4457 ms
+[19:41:21 INF] 464f82a698e34369b8c09a40ad729988 HTTP GET /hubs/trips responded 200 in 6.7842 ms
+[19:41:21 INF] f6ca308c5a7240f183f0da6b141a1f12 HTTP POST /hubs/trips responded 200 in 0.3165 ms
+[19:41:21 INF] 83dbf0468a14494b82c77a3da4dac416 HTTP GET /hubs/trips responded 200 in 27.9309 ms
+[19:41:21 INF] f9b27591d67b489caeacd2945eb06ebf HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/board responded 409 in 4.1773 ms
+[19:41:21 INF] 71e884f46e3c49789f1b10f1d415e186 HTTP GET /hubs/trips responded 200 in 10.5689 ms
+[19:41:21 INF] d708361a17424fe585a13a0a91275854 HTTP POST /api/trips/01a1cc2e-74f7-7d60-a506-97398342c941/start responded 200 in 2.8737 ms
+[19:41:21 INF] 665ff67d93844e2592ec84d23951780a HTTP GET /hubs/trips responded 200 in 6.1063 ms
+[19:41:21 INF] 3ce01247005a474c9313b857bafe21d0 HTTP POST /api/trips/01a1cc2e-74f7-7d60-a506-97398342c941/position responded 200 in 2.4069 ms
+[19:41:21 INF] 6e337f2bf2e746d1b462e158f41764d3 HTTP GET /api/trips/01a1cc2e-74f7-7d60-a506-97398342c941/live responded 200 in 2.3912 ms
+[19:41:21 INF] 698b8a5395ab42bbbeb50b0daa9792f8 HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/board responded 422 in 3.6171 ms
+[19:41:21 INF] 35e0e7857efd4b2c99ad4d47ede50491 HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/board responded 200 in 7.3678 ms
+[19:41:21 INF] bea3f054603e4ccd88195865bd0b64b6 HTTP GET /hubs/trips responded 200 in 31.0542 ms
+[19:41:21 INF] 5c21ca956160404a9584dd3f2d8d6297 HTTP POST /api/trips/01a1cc2e-74f7-7d60-a506-97398342c941/finish responded 200 in 15.8613 ms
+[19:41:21 INF] 3c73942d94864358a3749f73438db97b HTTP GET /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee responded 200 in 3.9771 ms
+[19:41:21 INF] 531f8390aa6542ac88c1b035bdb916bc HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/review responded 201 in 31.3797 ms
+[19:41:21 INF] 5439d2dabad345a4a0c31df020c226df HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/review responded 201 in 6.0585 ms
+[19:41:21 ERR] e43a87b931ef4f0cbf0143f2a782e964 Failed executing DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p3='?', @p4='?' (DbType = DateTime), @p5='?', @p6='?' (DbType = Int32), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid)], CommandType='Text', CommandTimeout='30']
+INSERT INTO reviews (id, author_id, booking_id, comment, created_at, of, stars, subject_id, trip_id)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+[19:41:21 ERR] e43a87b931ef4f0cbf0143f2a782e964 An exception occurred in the database while saving changes for context type 'Yoldas.Infrastructure.Persistence.YoldasDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "ix_reviews_booking_id_author_id"
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "ix_reviews_booking_id_author_id"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: reviews
+    ConstraintName: ix_reviews_booking_id_author_id
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "ix_reviews_booking_id_author_id"
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "ix_reviews_booking_id_author_id"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: reviews
+    ConstraintName: ix_reviews_booking_id_author_id
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[19:41:21 INF] e43a87b931ef4f0cbf0143f2a782e964 HTTP POST /api/bookings/01a1cc2e-74f7-7409-b1d3-b5401dfb98ee/review responded 409 in 16.4712 ms
+[19:41:21 INF] e34cfa93c4d94299a0569bdbd3c9757e HTTP GET /api/users/01a1cc2e-74f7-7366-9d7f-d1f7a050c24c responded 200 in 6.7402 ms
+[19:41:21 INF] 156d6ab7652b403aa60fb67790eb0e21 HTTP GET /api/users/01a1cc2e-74f7-7d88-9b3a-1439518c8695 responded 200 in 4.2566 ms
+[19:41:21 INF] d776e71d52564a4dbcc2617d8a54c1b7 HTTP GET /api/trips/01a1cc2e-74f7-7d60-a506-97398342c941 responded 200 in 3.6855 ms
+[19:41:21 INF] a35e55a89c5343c7b9755bb3a2a44e4f HTTP POST /hubs/trips responded 200 in 0.3510 ms
+[19:41:21 INF] 1875d2b30d774bcb8efd6b6e5275728f HTTP GET /hubs/trips responded 200 in 95.1803 ms
+[19:41:21 INF] ddff8bfaa89a4914b1561504bf0f0ba5 HTTP GET /hubs/trips responded 200 in 0.6208 ms
+[19:41:21 INF] 800eca935fe54e898b8bd6f430b6901d HTTP DELETE /hubs/trips responded 202 in 1.0038 ms
+[19:41:21 INF] 9df0de5c6afd4f1cbef21829e2208838 Account 01a1cc3c-3097-7484-b250-341b05a760f8 registered
+[19:41:21 INF] 9df0de5c6afd4f1cbef21829e2208838 HTTP POST /api/auth/register responded 201 in 47.2012 ms
+[19:41:21 INF] 76e06962ef5243d0b05c38e57e171698 HTTP PUT /api/me/vehicle responded 200 in 2.6608 ms
+[19:41:21 INF] 0608f180be5e46a4892ab7ab20efcb1c Trip 01a1cc3c-3097-717b-9d59-aff6f10ee382 offered with 4 stops over 332.2 km
+[19:41:21 INF] 0608f180be5e46a4892ab7ab20efcb1c HTTP POST /api/trips responded 201 in 7.5089 ms
+[19:41:21 INF] b6c577eeab50450b8eb1c4bef18cc0aa Trip 01a1cc3c-3097-72ff-b2bb-f06030c15c81 offered with 4 stops over 332.2 km
+[19:41:21 INF] b6c577eeab50450b8eb1c4bef18cc0aa HTTP POST /api/trips responded 201 in 6.1053 ms
+[19:41:21 INF] 0617445c23c241fea981d42a61abd97d Account 01a1cc3c-3097-7b3f-ba8a-7199c6b67138 registered
+[19:41:21 INF] 0617445c23c241fea981d42a61abd97d HTTP POST /api/auth/register responded 201 in 48.8296 ms
+[19:41:21 INF] e2a7af05c84b4cd981cd5a0fccfd6e0c Booking 01a1cc3c-3097-73e4-8555-017928d3863b on trip 01a1cc3c-3097-717b-9d59-aff6f10ee382: Requested, 1 seats
+[19:41:21 INF] e2a7af05c84b4cd981cd5a0fccfd6e0c HTTP POST /api/bookings responded 201 in 7.2975 ms
+[19:41:21 INF] 4f6e48c7fdc0421d9f23433cf7636311 HTTP POST /api/bookings/01a1cc3c-3097-73e4-8555-017928d3863b/accept responded 200 in 8.2652 ms
+[19:41:21 INF] 44318679a021407a928380dc559b4d03 HTTP POST /api/auth/login responded 200 in 53.3096 ms
+[19:41:21 INF] 9b02ec2e52db432d9d89f893edef7e36 HTTP POST /api/trips/01a1cc3c-3097-72ff-b2bb-f06030c15c81/start responded 200 in 2.7322 ms
+[19:41:21 WRN]  The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+[19:41:21 WRN]  The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+[19:41:21 INF]  Sweep: 0 requests lapsed, 4 trips cancelled or finished by the clock
+[19:41:21 INF]  Sweep: 0 requests lapsed, 2 trips cancelled or finished by the clock
+[19:41:21 INF] 4277218cb7dc44ee8b1bad888ec983d0 HTTP GET /api/users/01a1cc3c-3097-7484-b250-341b05a760f8 responded 200 in 5.0058 ms
+[19:41:22 INF] 1ff0e20b4d7a468580d8f7d2f6b38edb Account 01a1de6f-5280-7fc4-8b77-cf97b65f9ad0 registered
+[19:41:22 INF] 1ff0e20b4d7a468580d8f7d2f6b38edb HTTP POST /api/auth/register responded 201 in 56.7804 ms
+[19:41:22 INF] 72c85b1db92e4f6f9dcee1a6e58a61b7 HTTP PUT /api/me/vehicle responded 200 in 2.3907 ms
+[19:41:22 INF] 815b281d1b5345659c356007826d179c Trip 01a1de6f-5280-7582-bd2e-7084f1326d9e offered with 4 stops over 332.2 km
+[19:41:22 INF] 815b281d1b5345659c356007826d179c HTTP POST /api/trips responded 201 in 6.9194 ms
+[19:41:22 INF] 0a78bc26d118498986660e020dfd9376 Account 01a1de6f-5280-70f9-a610-367736325a4c registered
+[19:41:22 INF] 0a78bc26d118498986660e020dfd9376 HTTP POST /api/auth/register responded 201 in 48.7667 ms
+[19:41:22 INF] 1bfaa75d729c43c7ada6ef1675872ef8 Booking 01a1de6f-5280-7727-a6d9-e1e5e07269ca on trip 01a1de6f-5280-7582-bd2e-7084f1326d9e: Requested, 1 seats
+[19:41:22 INF] 1bfaa75d729c43c7ada6ef1675872ef8 HTTP POST /api/bookings responded 201 in 7.4254 ms
+[19:41:22 INF] 62031c02c5f144a2902c16b6460df643 Account 01a1de7d-0e20-7212-a1c1-a6c45f088ddf registered
+[19:41:22 INF] 62031c02c5f144a2902c16b6460df643 HTTP POST /api/auth/register responded 201 in 50.1355 ms
+[19:41:22 INF] 289423ad547e452f8bcb031b1c1597f2 HTTP GET /api/trips/01a1de6f-5280-7582-bd2e-7084f1326d9e/live responded 404 in 2.5579 ms
+[19:41:22 INF] b610ce21c2a144dc880139ebb9b5be9c HTTP GET /api/trips/01a1de6f-5280-7582-bd2e-7084f1326d9e/live responded 404 in 2.2301 ms
+[19:41:22 INF] 3998a9aa94c9497495d6d79ac1ccc13a HTTP POST /hubs/trips/negotiate responded 200 in 0.3683 ms
+[19:41:22 INF] 0e27d230919044af939f0ba0e9b5867d HTTP GET /hubs/trips responded 200 in 0.4006 ms
+[19:41:22 INF] f2a50f7ced5d42e69ab019f653025e09 HTTP POST /hubs/trips responded 200 in 0.0745 ms
+[19:41:22 INF] 2634859d41994b359079dc3d6930ede9 HTTP GET /hubs/trips responded 200 in 0.3477 ms
+[19:41:22 INF] 836887774cb74600a3c77c3d8b2cf1ab HTTP POST /hubs/trips responded 200 in 0.1639 ms
+[19:41:22 ERR] 0e27d230919044af939f0ba0e9b5867d Failed to invoke hub method 'Follow'.
+Microsoft.AspNetCore.SignalR.HubException: There is no trip with this id that you may follow.
+   at Yoldas.Api.Features.Live.TripHub.Follow(Guid tripId) in /home/runner/work/yoldas/yoldas/src/Yoldas.Api/Features/Live/TripHub.cs:line 44
+   at lambda_method60(Closure, Object)
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.ExecuteMethod(ObjectMethodExecutor methodExecutor, Hub hub, Object[] arguments)
+   at Microsoft.AspNetCore.SignalR.Internal.DefaultHubDispatcher`1.<Invoke>g__ExecuteInvocation|22_0(DefaultHubDispatcher`1 dispatcher, ObjectMethodExecutor methodExecutor, THub hub, Object[] arguments, AsyncServiceScope scope, IHubActivator`1 hubActivator, HubConnectionContext connection, HubMethodInvocationMessage hubMethodInvocationMessage, Boolean isStreamCall)
+[19:41:22 INF] a0fe892d746c4ccf931ed19ae0248dfb HTTP GET /hubs/trips responded 200 in 7.3812 ms
+[19:41:22 INF] b89b6755081a4bcdbd208be8db22a821 HTTP POST /hubs/trips responded 200 in 0.1652 ms
+[19:41:22 INF] fab2a5f4a1da450eb97485c533c4d3a7 HTTP GET /hubs/trips responded 200 in 1.6507 ms
+[19:41:22 INF] 396a75c6b2c542128ca511ff0cf9b5a9 HTTP DELETE /hubs/trips responded 202 in 0.1805 ms
+[19:41:22 INF] 6d2928de0dde4f6d9350318db2e04564 HTTP POST /api/trips/01a1de6f-5280-7582-bd2e-7084f1326d9e/position responded 409 in 1.9231 ms
+[19:41:22 INF] d1999c47d5b94e06add80ac41be2a1af HTTP POST /api/trips/01a1de6f-5280-7582-bd2e-7084f1326d9e/start responded 404 in 2.0000 ms
+[19:41:22 INF] 2fcdc8f523b941c7871c5d04eb0c2069 HTTP GET /api/trips/01a1de6f-5280-7582-bd2e-7084f1326d9e/live responded 200 in 1.4470 ms
+[19:41:22 INF] dba9cfba113546dca8bbe73a7bdf6b7f Account 01a1de7d-0e20-78dc-b196-28bd0a2ab35a registered
+[19:41:22 INF] dba9cfba113546dca8bbe73a7bdf6b7f HTTP POST /api/auth/register responded 201 in 56.8675 ms
+[19:41:22 INF] 6cf880c44fa8473e93cff54597a86a2b HTTP PUT /api/me/vehicle responded 200 in 2.4514 ms
+[19:41:22 INF] 1bee0d1a76c54a7b816f6ce97f50aace Trip 01a1de7d-0e20-7fa7-b4dd-bd0a3465922d offered with 4 stops over 332.2 km
+[19:41:22 INF] 1bee0d1a76c54a7b816f6ce97f50aace HTTP POST /api/trips responded 201 in 7.0151 ms
+[19:41:22 INF] 87ab866057f245c6b8efc2adf7620bf8 Account 01a1de7d-0e20-70f5-99ce-7fab4a25ab22 registered
+[19:41:22 INF] 87ab866057f245c6b8efc2adf7620bf8 HTTP POST /api/auth/register responded 201 in 50.8105 ms
+[19:41:22 INF] c736e2d18fdf4b8d83dcfc7bdd7ec755 Account 01a1de7d-0e20-7a13-9f7b-09e105701469 registered
+[19:41:22 INF] c736e2d18fdf4b8d83dcfc7bdd7ec755 HTTP POST /api/auth/register responded 201 in 50.2960 ms
+[19:41:22 INF] 192e0d0dd3e3498c959762fd8c423cb0 Account 01a1de7d-0e20-78ac-beec-a1a198fee1ee registered
+[19:41:22 INF] 192e0d0dd3e3498c959762fd8c423cb0 HTTP POST /api/auth/register responded 201 in 50.3378 ms
+[19:41:22 INF] 7352cea672ba4d63821920ff19fc57d0 Booking 01a1de7d-0e20-7535-9a35-8e87dd4df375 on trip 01a1de7d-0e20-7fa7-b4dd-bd0a3465922d: Confirmed, 1 seats
+[19:41:22 INF] 7352cea672ba4d63821920ff19fc57d0 HTTP POST /api/bookings responded 201 in 8.8858 ms
+[19:41:22 INF] 45d5c29c711a45c988a3e88c9cbae6c3 Booking 01a1de7d-0e20-78d6-9707-bf68742c92d7 on trip 01a1de7d-0e20-7fa7-b4dd-bd0a3465922d: Confirmed, 1 seats
+[19:41:22 INF] 45d5c29c711a45c988a3e88c9cbae6c3 HTTP POST /api/bookings responded 201 in 9.5530 ms
+[19:41:22 INF] a61f2e94648044a5ae2a0ede6856dda1 HTTP POST /api/bookings/01a1de7d-0e20-7535-9a35-8e87dd4df375/cancel responded 200 in 9.1965 ms
+[19:41:22 INF] e5af4f6740d549f49cff3af3d1959901 Booking 01a1de7d-0e20-7c69-9493-aad40cacd2ab on trip 01a1de7d-0e20-7fa7-b4dd-bd0a3465922d: Confirmed, 1 seats
+[19:41:22 INF] e5af4f6740d549f49cff3af3d1959901 HTTP POST /api/bookings responded 201 in 8.7525 ms
+[19:41:22 ERR] 328731fb63e5427c97bcac2eb36d8659 Failed executing DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?', @p4='?' (DbType = DateTime), @p5='?' (DbType = DateTime), @p6='?' (DbType = Guid), @p7='?' (DbType = Object), @p8='?' (DbType = DateTime), @p9='?', @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?', @p13='?' (DbType = Guid), @p14='?' (DbType = Object), @p15='?' (DbType = DateTime), @p16='?', @p17='?' (DbType = Int64), @p18='?', @p19='?' (DbType = DateTime), @p20='?' (DbType = DateTime), @p21='?' (DbType = Int32), @p22='?', @p23='?' (DbType = Int32), @p24='?' (DbType = Guid), @p25='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+INSERT INTO bookings (id, boarded_at, boarding_code, cancelled_by, closed_at, confirmed_at, driver_id, dropoff, dropoff_at, dropoff_near, from_meters, late_cancellation, message, passenger_id, pickup, pickup_at, pickup_near, price_per_seat_minor, reason, requested_at, respond_by, seats, status, to_meters, trip_id, wrong_codes)
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25)
+RETURNING xmin;
+[19:41:22 ERR] 328731fb63e5427c97bcac2eb36d8659 An exception occurred in the database while saving changes for context type 'Yoldas.Infrastructure.Persistence.YoldasDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "ix_bookings_one_per_passenger"
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "ix_bookings_one_per_passenger"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: bookings
+    ConstraintName: ix_bookings_one_per_passenger
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "ix_bookings_one_per_passenger"
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "ix_bookings_one_per_passenger"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: bookings
+    ConstraintName: ix_bookings_one_per_passenger
+    File: nbtinsert.c
+    Line: 666
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[19:41:22 INF] 328731fb63e5427c97bcac2eb36d8659 HTTP POST /api/bookings responded 409 in 6.7208 ms
+[19:41:22 INF] 43951a63a9be4ce8b5e42d37e610df4f HTTP POST /api/bookings responded 409 in 2.5273 ms
+[19:41:22 INF] 45c6a5beaad44221895758bff0246b79 HTTP POST /api/trips/01a1de7d-0e20-7fa7-b4dd-bd0a3465922d/cancel responded 200 in 7.9159 ms
+[19:41:22 INF] 053370a025c6452aa1afb20e49b66d8e HTTP GET /api/bookings/01a1de7d-0e20-78d6-9707-bf68742c92d7 responded 200 in 3.9976 ms
+[19:41:22 INF] 48dcddb22fbb4b8dbedddec5795b560b HTTP POST /api/bookings responded 409 in 1.9594 ms
+  Passed Yoldas.IntegrationTests.TripDayTests.A_passenger_who_does_not_come_is_marked_once_the_car_has_passed [321 ms]
+  Passed Yoldas.IntegrationTests.TripDayTests.A_trip_day_from_the_start_to_the_reviews [360 ms]
+  Passed Yoldas.IntegrationTests.TripDayTests.The_clock_cancels_trips_that_never_started_as_the_drivers_and_finishes_forgotten_ones [316 ms]
+  Passed Yoldas.IntegrationTests.TripDayTests.Only_the_driver_and_confirmed_passengers_follow_a_trip [204 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.Calling_off_late_is_recorded_and_cancelling_the_trip_cancels_every_seat [296 ms]
+[19:41:22 INF] 2be9c2e324064d61a611f2ec6008794d Account 01a1de7d-0e20-796b-a14d-bd5f5ce74807 registered
+[19:41:22 INF] 2be9c2e324064d61a611f2ec6008794d HTTP POST /api/auth/register responded 201 in 52.7395 ms
+[19:41:22 INF] c47914cd1e424c9eaac1341c46a774c5 HTTP PUT /api/me/vehicle responded 200 in 2.3835 ms
+[19:41:22 INF] 77dae87659b04e3fa921c8acde197cb9 Trip 01a1de7d-0e20-7867-8c9b-652c8234739f offered with 4 stops over 332.2 km
+[19:41:22 INF] 77dae87659b04e3fa921c8acde197cb9 HTTP POST /api/trips responded 201 in 19.3732 ms
+[19:41:22 INF] 59bc5aa6e02346a2b634b31c535814c1 Account 01a1de7d-0e20-7744-be4b-cccdf5ed497b registered
+[19:41:22 INF] 59bc5aa6e02346a2b634b31c535814c1 HTTP POST /api/auth/register responded 201 in 53.8830 ms
+[19:41:22 INF] f51250a036194c15b22e71867e85d0a0 Account 01a1de7d-0e20-75a0-a459-82a3e52eafb2 registered
+[19:41:22 INF] f51250a036194c15b22e71867e85d0a0 HTTP POST /api/auth/register responded 201 in 54.7440 ms
+[19:41:22 INF] d8370374b9194560a2670a7573946ebd Booking 01a1de7d-0e20-7f34-a794-791bc8b1d69d on trip 01a1de7d-0e20-7867-8c9b-652c8234739f: Requested, 1 seats
+[19:41:22 INF] d8370374b9194560a2670a7573946ebd HTTP POST /api/bookings responded 201 in 8.1329 ms
+[19:41:22 INF] 68a688962f4b40c49fbd03371af75d99 Booking 01a1de7d-0e20-7a1a-9344-ae97391a070e on trip 01a1de7d-0e20-7867-8c9b-652c8234739f: Requested, 1 seats
+[19:41:22 INF] 68a688962f4b40c49fbd03371af75d99 HTTP POST /api/bookings responded 201 in 8.0489 ms
+[19:41:22 INF] 9e268ab33d5b4150a0f617cb8b363be0 HTTP POST /api/bookings/01a1de7d-0e20-7f34-a794-791bc8b1d69d/accept responded 200 in 7.7366 ms
+[19:41:22 ERR] e4161e038e0c4cbdb7557374b8fcb1bc Failed executing DbCommand (1ms) [Parameters=[@p3='?' (DbType = Guid), @p0='?', @p1='?' (DbType = DateTime), @p2='?', @p4='?' (DbType = Object)], CommandType='Text', CommandTimeout='30']
+UPDATE bookings SET boarding_code = @p0, confirmed_at = @p1, status = @p2
+WHERE id = @p3 AND xmin = @p4
+RETURNING xmin;
+[19:41:22 ERR] e4161e038e0c4cbdb7557374b8fcb1bc An exception occurred in the database while saving changes for context type 'Yoldas.Infrastructure.Persistence.YoldasDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23514: trip 01a1de7d-0e20-7867-8c9b-652c8234739f has fewer than 1 seats free between 61319 m and 136927 m
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23514
+    MessageText: trip 01a1de7d-0e20-7867-8c9b-652c8234739f has fewer than 1 seats free between 61319 m and 136927 m
+    Where: PL/pgSQL function bookings_check_seats() line 9 at RAISE
+    ConstraintName: ck_bookings_seats_free
+    File: pl_exec.c
+    Line: 3897
+    Routine: exec_stmt_raise
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23514: trip 01a1de7d-0e20-7867-8c9b-652c8234739f has fewer than 1 seats free between 61319 m and 136927 m
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23514
+    MessageText: trip 01a1de7d-0e20-7867-8c9b-652c8234739f has fewer than 1 seats free between 61319 m and 136927 m
+    Where: PL/pgSQL function bookings_check_seats() line 9 at RAISE
+    ConstraintName: ck_bookings_seats_free
+    File: pl_exec.c
+    Line: 3897
+    Routine: exec_stmt_raise
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[19:41:22 INF] e4161e038e0c4cbdb7557374b8fcb1bc HTTP POST /api/bookings/01a1de7d-0e20-7a1a-9344-ae97391a070e/accept responded 409 in 5.4237 ms
+[19:41:22 INF] da233c64ab1e43e1a84851bad27da925 HTTP PUT /api/trips/01a1de7d-0e20-7867-8c9b-652c8234739f responded 200 in 10.4405 ms
+[19:41:22 INF] cc7a1d8627ab4c62beb1ea1c7fabe5c2 HTTP PUT /api/trips/01a1de7d-0e20-7867-8c9b-652c8234739f responded 409 in 4.2494 ms
+[19:41:22 INF] f5603c97ad674ba7939b7e4e3eabdbf4 HTTP GET /api/bookings/01a1de7d-0e20-7a1a-9344-ae97391a070e responded 200 in 4.6307 ms
+[19:41:22 INF] 29ad2c28cf144e73aa37876a3e20194f Account 01a1de7d-0e20-75ba-93d4-d5e31027f17a registered
+[19:41:22 INF] 29ad2c28cf144e73aa37876a3e20194f HTTP POST /api/auth/register responded 201 in 51.3276 ms
+[19:41:22 INF] b15a779740dc441a9a5aeaf6b44d1469 HTTP PUT /api/me/vehicle responded 200 in 2.3501 ms
+[19:41:22 INF] 23392fe7fdca478baf4a59ff5e933f42 Trip 01a1de7d-0e20-716d-802e-478a6c99fa48 offered with 4 stops over 332.2 km
+[19:41:22 INF] 23392fe7fdca478baf4a59ff5e933f42 HTTP POST /api/trips responded 201 in 7.2758 ms
+[19:41:22 INF] 07d77623b8b645d5ac91050048a25f27 Account 01a1de7d-0e20-70ea-80d7-f6c748d74982 registered
+[19:41:22 INF] 07d77623b8b645d5ac91050048a25f27 HTTP POST /api/auth/register responded 201 in 55.9598 ms
+[19:41:22 INF]  Demo: the car reached Merzifon; starting a new lap
+[19:41:22 INF] 47ea16e7292f42bdb31adc7e2e0100c1 Account 01a1de7d-0e20-798d-bee9-ccb1db8a0316 registered
+[19:41:22 INF] 47ea16e7292f42bdb31adc7e2e0100c1 HTTP POST /api/auth/register responded 201 in 50.2097 ms
+[19:41:22 INF] 2dfa942f7c554e07ab476eefb5d93322 HTTP GET /api/demo responded 200 in 3.4277 ms
+[19:41:22 INF] 318e6a58f90d471eaaa209545eb5a5d1 Account 01a1de7d-0e20-7fff-ba28-d5ca65a408a9 registered
+[19:41:22 INF] 318e6a58f90d471eaaa209545eb5a5d1 HTTP POST /api/auth/register responded 201 in 50.2719 ms
+[19:41:22 INF] 239c6d0786b5409687816cc9ba59c851 Booking 01a1de7d-0e20-7fe5-ac1b-a559c3e779b6 on trip 01a1de7d-0e20-716d-802e-478a6c99fa48: Confirmed, 2 seats
+[19:41:22 INF] 239c6d0786b5409687816cc9ba59c851 HTTP POST /api/bookings responded 201 in 9.5550 ms
+[19:41:22 INF] c6b678cd28104ec0a0f9d01eeb48d84d Booking 01a1de7d-0e20-70e9-830f-dccb980ec028 on trip 01a1de7d-0e20-716d-802e-478a6c99fa48: Confirmed, 2 seats
+[19:41:22 INF] c6b678cd28104ec0a0f9d01eeb48d84d HTTP POST /api/bookings responded 201 in 7.5780 ms
+[19:41:22 INF] 43f044603ca0413ba29dc3c1ca2080e0 HTTP POST /api/bookings responded 409 in 2.5595 ms
+[19:41:22 INF] f9c768fdf837446a826f4f69e7b8eb62 HTTP POST /api/auth/login responded 200 in 45.5914 ms
+[19:41:22 INF] a558f587bdc34b31b0cece2be740f4cc HTTP GET /api/trips/01a1de7d-0e20-716d-802e-478a6c99fa48/passengers responded 200 in 35.1936 ms
+[19:41:22 INF] 0bc687c0d22840b598ab99c31595f8eb HTTP GET /api/trips responded 200 in 5.9148 ms
+[19:41:23 INF] 2fbe46a965a5407db42561284c97d3d0 HTTP GET /api/me/bookings responded 200 in 27.4206 ms
+[19:41:23 INF] e35a1e439ef2464a98b6aff57e5e5112 Account 01a1de7d-0e20-774f-88a2-7d2ff9227845 registered
+[19:41:23 INF] e35a1e439ef2464a98b6aff57e5e5112 HTTP POST /api/auth/register responded 201 in 40.8153 ms
+[19:41:23 INF] aa3d0fbbc02a49c4ba0b131538cedb8c HTTP PUT /api/me/vehicle responded 200 in 2.5661 ms
+[19:41:23 INF] 5cacbeaf371b4c63aca65a03bfebc650 Trip 01a1de7d-0e20-700f-b94e-16cb16f47ff3 offered with 4 stops over 332.2 km
+[19:41:23 INF] 5cacbeaf371b4c63aca65a03bfebc650 HTTP POST /api/trips responded 201 in 6.5427 ms
+[19:41:23 INF] a63631e7326a44acad046ddb49c2a471 HTTP POST /api/auth/login responded 200 in 43.9412 ms
+[19:41:23 INF] ba2beb5982cd43f6873273b9b0ab4d27 HTTP GET /api/users/019f6225-9957-72b1-bc67-ca185da8fc98 responded 200 in 7.5248 ms
+[19:41:23 INF] 1fc111a871db47c99d588eb52bbcd7f2 HTTP GET /api/me/trips responded 200 in 8.1162 ms
+[19:41:23 INF] 7f92f8c3258c4d968dc8dc91421c7a0a HTTP GET /api/trips/01a1cc20-b957-7a1f-81a0-fb74c3836d4a/passengers responded 200 in 4.1149 ms
+[19:41:23 INF]  Application is shutting down...
+[testcontainers.org 00:00:23.99] Delete Docker container 4f855017f968
+[19:41:23 INF] 81638fdfcdd546f79cb842f4ae35c10f Booking 01a1de7d-0e20-785f-8246-c2713536b5fa on trip 01a1de7d-0e20-700f-b94e-16cb16f47ff3: Confirmed, 2 seats
+[19:41:23 INF] 2207a6402ba34588a937c2890666416d Booking 01a1de7d-0e20-7d7b-8e7f-145235de6a07 on trip 01a1de7d-0e20-70ab-856e-784ff0d3352e: Requested, 2 seats
+[19:41:23 INF] 1a53c31d6b7d46359ac6a49c4cd9fd43 Booking 01a1de7d-0e20-74e2-b92d-8301fe9c2821 on trip 01a1de7d-0e20-7071-b565-04ae26bcea84: Requested, 1 seats
+[19:41:23 INF]  Sweep: 3 requests lapsed, 1 trips cancelled or finished by the clock
+  Passed Yoldas.IntegrationTests.BookingTests.Accepting_when_the_seats_have_gone_is_refused_and_the_request_waits [243 ms]
+  Passed Yoldas.IntegrationTests.DemoTests.The_car_on_the_road_picks_Ayse_up_in_Havza_drops_her_in_Merzifon_and_starts_over [3 s]
+  Passed Yoldas.IntegrationTests.DemoTests.The_demo_lists_no_accounts_unless_it_is_on [6 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.A_seat_left_in_Havza_carries_someone_else_from_Havza_on [296 ms]
+  Passed Yoldas.IntegrationTests.DemoTests.Seeding_creates_people_who_can_sign_in_with_a_past_and_trips_ahead_and_running_it_again_adds_nothing [176 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.The_database_refuses_seats_beyond_the_car_whoever_writes_them [132 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.Bookings_are_checked [110 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.A_request_waits_for_the_driver_and_the_plate_shows_once_it_is_accepted [173 ms]
+  Passed Yoldas.IntegrationTests.BookingTests.Requests_nobody_answers_lapse [102 ms]
+[19:41:24 INF] 2f9ab24630134f1b8d0a4e25aa8aa8e3 Booking 01a1e147-2aa0-747b-af18-20bcec0be5f4 on trip 01a1e147-2aa0-751b-88e8-b1f7e319e1b1: Confirmed, 1 seats
+  Passed Yoldas.IntegrationTests.BookingTests.Twenty_people_taking_the_last_seat_at_once_leaves_exactly_one_in_it [1 s]
+  Passed Yoldas.IntegrationTests.AuthTests.Health_and_the_api_reference_are_public [118 ms]
+  Passed Yoldas.IntegrationTests.AuthTests.Invalid_registrations_say_what_is_wrong [2 ms]
+  Passed Yoldas.IntegrationTests.AuthTests.An_email_is_registered_once_whatever_its_case [44 ms]
+  Passed Yoldas.IntegrationTests.AuthTests.Registering_signs_in_with_nothing_listed_yet [46 ms]
+  Passed Yoldas.IntegrationTests.AuthTests.Your_own_pages_need_a_token_and_search_does_not [33 ms]
+[19:41:25 INF]  Application is shutting down...
+[testcontainers.org 00:00:26.06] Delete Docker container 2e28dde186ca
+[xUnit.net 00:00:26.66]   Finished:    Yoldas.IntegrationTests
+  Passed Yoldas.IntegrationTests.AuthTests.Sign_in_works_with_the_right_password_and_says_the_same_for_any_mistake [160 ms]
+  Passed Yoldas.IntegrationTests.AuthTests.Tokens_stop_working_when_they_expire [49 ms]
+
+Test Run Successful.
+Total tests: 31
+     Passed: 31
+ Total time: 27.1138 Seconds

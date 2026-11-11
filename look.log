@@ -1,0 +1,16 @@
+feed: Live
+phone url http://localhost:8080/signin Yoldaş / Going the same way? Share the seats and the fuel / Sign in / Email / Password / Sign in /  / New here? Create an account /  / Look around first /  / Try the demo /  / Sign in as one of them; nobody needs an account. The data is made up and starts over now and then. /  / Ayşe Kaya Passenger / Waits in Havza for Mehmet's ca
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+locator.click: Error: strict mode violation: getByRole('button', { name: /Mehmet/ }) resolved to 2 elements:
+    1) <button type="button" class="demo-account">…</button> aka getByRole('button', { name: 'Ayşe Kaya Passenger Waits in' })
+    2) <button type="button" class="demo-account">…</button> aka getByRole('button', { name: 'Mehmet Yıldız Driver Driving' })
+
+Call log:
+  - waiting for getByRole('button', { name: /Mehmet/ })
+
+    at /home/runner/work/yoldas/yoldas/tests/e2e/look.mjs:14:310
+
+Node.js v22.23.4

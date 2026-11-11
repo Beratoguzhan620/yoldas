@@ -1,0 +1,35 @@
+Cannot load library libgssapi_krb5.so.2 
+Error: libgssapi_krb5.so.2: cannot open shared object file: No such file or directory
+[19:42:04 ERR]  Failed executing DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT migration_id, product_version
+FROM __ef_migrations_history
+ORDER BY migration_id;
+[19:42:05 WRN]  Storing keys in a directory '/home/app/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+[19:42:05 WRN]  No XML encryptor configured. Key {90bacb8a-b1ee-4593-9235-b26a7cff83d6} may be persisted to storage in unencrypted form.
+[19:42:05 INF]  Now listening on: http://[::]:8080
+[19:42:05 INF]  Application started. Press Ctrl+C to shut down.
+[19:42:05 INF]  Hosting environment: Production
+[19:42:05 INF]  Content root path: /app
+[19:42:05 WRN]  The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+[19:42:05 WRN]  The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+[19:42:05 INF]  Demo: 4 past rides with reviews created
+[19:42:06 INF]  Demo: 6 upcoming trips created
+[19:42:06 INF] 1b09cf82e83c4c659f927175386550b5 HTTP GET /health/ready responded 200 in 27.5953 ms
+[19:42:06 INF] e383def861a641e79f60d46fd634193c HTTP GET /health/ready responded 200 in 9.4648 ms
+[19:42:06 INF] f94351dbfb124022b160f38d5aee1ae9 HTTP GET /rides responded 200 in 4.3231 ms
+[19:42:06 INF] 72b75b8a140b4df98f3eb504b8928eff HTTP HEAD / responded 200 in 0.5912 ms
+[19:42:06 INF] 0cd1ea06a6f445e08cf4b731e86cb569 HTTP GET /api/nothing responded 404 in 11.1294 ms
+[19:42:06 INF] c92dd572514a4b889b84e90c9bc779dd HTTP GET /api/demo responded 200 in 2.8382 ms
+[19:42:24 INF] ecb2836f2e514f3f83214c638e4b253e HTTP GET / responded 200 in 1.0169 ms
+[19:42:24 INF] ffccebec60174e7c9587065f7d786106 HTTP GET /api/demo responded 200 in 0.5620 ms
+[19:42:27 INF] 50babd3e09a545f8874290612eb7c7ed HTTP GET /signin responded 200 in 0.3655 ms
+[19:42:27 INF] 9d08b78ba95944fdba50acc7ea04b593 HTTP GET /api/demo responded 200 in 0.4434 ms
+[19:42:28 INF] b58795ec9cd748e892f63fe218341514 HTTP POST /api/auth/login responded 200 in 103.3350 ms
+[19:42:28 INF] d59577a0b04e49d2ab6b2f376dd26957 HTTP GET /api/me responded 200 in 35.5109 ms
+[19:42:28 INF] 1b6e99a07a0147ad98f1b94d60d11e4f HTTP GET /api/me/bookings responded 200 in 45.1123 ms
+[19:42:30 INF] f719f4c7baab44fb8cf7fde6ef1c16ed HTTP GET /api/bookings/01a1cb63-50bf-73ce-8888-8649ce1c0c48 responded 200 in 35.4707 ms
+[19:42:30 INF] 7a8acf9233804fff9cd6bf486c5b93ca HTTP GET /api/trips/01a1cb51-013f-77ac-bef2-b0bf067ea603 responded 200 in 48.5036 ms
+[19:42:30 INF] 46f6555d506a4becbe8f97a06ccfcc92 HTTP POST /hubs/trips/negotiate responded 200 in 4.6119 ms
+[19:42:36 INF] 027a9cb2f25d4514af82bd9ad8ac6daa HTTP GET /signin responded 200 in 0.2839 ms
+[19:42:36 INF] 8f3cdc8a51984f3bbe3940d4adbb1a0e HTTP GET /api/demo responded 200 in 0.3876 ms
+[19:42:39 INF] 610a2b631a624d878dab842ed6f551bf HTTP GET /hubs/trips responded 101 in 8593.5571 ms

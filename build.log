@@ -1,0 +1,11 @@
+  Yoldas.Core -> /home/runner/work/yoldas/yoldas/src/Yoldas.Core/bin/Release/net10.0/Yoldas.Core.dll
+  Yoldas.Infrastructure -> /home/runner/work/yoldas/yoldas/src/Yoldas.Infrastructure/bin/Release/net10.0/Yoldas.Infrastructure.dll
+  Yoldas.UnitTests -> /home/runner/work/yoldas/yoldas/tests/Yoldas.UnitTests/bin/Release/net10.0/Yoldas.UnitTests.dll
+  Yoldas.Api -> /home/runner/work/yoldas/yoldas/src/Yoldas.Api/bin/Release/net10.0/Yoldas.Api.dll
+  Yoldas.IntegrationTests -> /home/runner/work/yoldas/yoldas/tests/Yoldas.IntegrationTests/bin/Release/net10.0/Yoldas.IntegrationTests.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:07.05

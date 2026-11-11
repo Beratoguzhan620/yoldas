@@ -1,0 +1,6 @@
+  Determining projects to restore...
+  Restored /home/runner/work/yoldas/yoldas/src/Yoldas.Core/Yoldas.Core.csproj (in 576 ms).
+  Restored /home/runner/work/yoldas/yoldas/src/Yoldas.Infrastructure/Yoldas.Infrastructure.csproj (in 814 ms).
+  Restored /home/runner/work/yoldas/yoldas/tests/Yoldas.UnitTests/Yoldas.UnitTests.csproj (in 949 ms).
+  Restored /home/runner/work/yoldas/yoldas/src/Yoldas.Api/Yoldas.Api.csproj (in 1.35 sec).
+  Restored /home/runner/work/yoldas/yoldas/tests/Yoldas.IntegrationTests/Yoldas.IntegrationTests.csproj (in 2.09 sec).
