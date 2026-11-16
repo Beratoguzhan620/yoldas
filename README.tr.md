@@ -18,6 +18,8 @@ Koltuklar güzergâhın her parçası için ayrı sayılır: Havza'da inen birin
 
 ## Deneyin
 
+**Canlı demo:** [yoldas-demo.onrender.com](https://yoldas-demo.onrender.com). Ana sayfadaki demo kişilerden biri olarak giriş yap; canlı haritada izlenecek bir şey olsun diye bir demo araba rotasında ilerliyor. Ücretsiz bir sunucuda, veritabanı Neon'da çalışıyor: bir süre kimse açmadıysa ilk açılış bir dakika kadar sürebilir.
+
 ```bash
 docker compose up --build
 ```
