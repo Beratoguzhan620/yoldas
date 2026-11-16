@@ -18,6 +18,8 @@ Seats are counted per part of the route, so a seat someone leaves in Havza is fr
 
 ## Try it
 
+**Live demo:** [yoldas-demo.onrender.com](https://yoldas-demo.onrender.com). Sign in as one of the demo people on the home page; a demo car drives its route so the live map has something to follow. It runs on a free server with the database on Neon: after a quiet spell the first visit can take about a minute.
+
 ```bash
 docker compose up --build
 ```
