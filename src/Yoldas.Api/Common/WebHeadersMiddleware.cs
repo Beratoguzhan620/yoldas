@@ -18,7 +18,7 @@ public sealed class WebHeadersMiddleware(RequestDelegate next)
             headers.ContentSecurityPolicy = Policy;
             headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=(self)";
             headers.XContentTypeOptions = "nosniff";
-            headers["Referrer-Policy"] = "no-referrer";
+            headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
         }
 
         return next(context);
