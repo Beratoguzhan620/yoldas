@@ -5,6 +5,7 @@ using System.Threading.RateLimiting;
 using Yoldas.Api.Common;
 using Yoldas.Api.Features.Auth;
 using Yoldas.Api.Features.Bookings;
+using Yoldas.Api.Features.Demo;
 using Yoldas.Api.Features.Live;
 using Yoldas.Api.Features.Trips;
 using Yoldas.Api.Logging;
@@ -23,7 +24,7 @@ builder.Services.AddSerilog((services, logger) => logger
     .ReadFrom.Services(services)
     .Enrich.FromLogContext());
 
-var connectionString = builder.Configuration.GetConnectionString("Yoldas");
+var connectionString = ConnectionStrings.FromUrl(builder.Configuration.GetConnectionString("Yoldas"));
 if (string.IsNullOrWhiteSpace(connectionString))
 {
     throw new InvalidOperationException(
@@ -82,12 +83,34 @@ builder.Services.AddOpenApi(options => options
     .AddDocumentTransformer<DocumentInfoTransformer>()
     .AddDocumentTransformer<SecuritySchemesTransformer>()
     .AddOperationTransformer<SecuritySchemesTransformer>());
+builder.Services.Configure<DemoOptions>(builder.Configuration.GetSection(DemoOptions.Section));
+builder.Services.AddScoped<DemoService>();
+if (builder.Configuration.GetValue($"{DemoOptions.Section}:Enabled", false))
+{
+    builder.Services.AddHostedService<DemoWorker>();
+}
+
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<YoldasDbContext>("database", tags: ["ready"]);
 
 var app = builder.Build();
 
+// One container for the public demo: the built web app is copied into wwwroot and served from here, with the same
+// headers nginx sets in Compose. Without a wwwroot (tests, Compose), nothing changes.
+var indexPage = Path.Combine(app.Environment.ContentRootPath, "wwwroot", "index.html");
+var serveWeb = File.Exists(indexPage);
 app.UseMiddleware<CorrelationIdMiddleware>();
+if (serveWeb)
+{
+    app.UseMiddleware<WebHeadersMiddleware>();
+    app.UseDefaultFiles();
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        OnPrepareResponse = context => context.Context.Response.Headers.CacheControl =
+            context.Context.Request.Path.StartsWithSegments("/assets") ? "public, max-age=31536000, immutable" : "no-cache",
+    });
+}
+
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseStatusCodePages();
@@ -110,7 +133,12 @@ app.MapScalarApiReference(options => options
     .DisableMcp()
     .DisableTelemetry());
 
-app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
+if (!serveWeb)
+{
+    app.MapGet("/", () => Results.Redirect("/scalar")).ExcludeFromDescription();
+}
+
+app.MapDemoEndpoints();
 app.MapAuthEndpoints();
 app.MapTripEndpoints();
 app.MapBookingEndpoints();
@@ -119,6 +147,22 @@ app.MapHub<TripHub>(TripHub.Path);
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions { Predicate = _ => false });
 app.MapHealthChecks("/health/ready", new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
+if (serveWeb)
+{
+    // Every other path is a page of the web app; unknown API paths stay 404s.
+    app.MapFallback(async context =>
+    {
+        if (WebHeadersMiddleware.IsApi(context.Request.Path))
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+            return;
+        }
+
+        context.Response.ContentType = "text/html; charset=utf-8";
+        context.Response.Headers.CacheControl = "no-cache";
+        await context.Response.SendFileAsync(indexPage, context.RequestAborted);
+    });
+}
 
 if (app.Configuration.GetValue("Database:MigrateOnStartup", false))
 {

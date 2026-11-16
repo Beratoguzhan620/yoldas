@@ -44,10 +44,10 @@ public static class TestApi
     }
 
     /// <summary>Signs in again, for tests that move the clock past the first token's life.</summary>
-    public static async Task<Person> SignInAsync(this ApiFactory factory, string email)
+    public static async Task<Person> SignInAsync(this ApiFactory factory, string email, string password = Password)
     {
         using var anonymous = factory.CreateClient();
-        var response = await anonymous.PostAsJsonAsync("/api/auth/login", new { email, password = Password });
+        var response = await anonymous.PostAsJsonAsync("/api/auth/login", new { email, password });
         response.EnsureSuccessStatusCode();
         return new Person(factory, await response.ReadAsync<SessionDto>());
     }

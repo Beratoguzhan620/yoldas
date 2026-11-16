@@ -78,10 +78,14 @@ export interface SearchFilters {
 /** Where a passenger starts and ends, to see their part of a trip and its price. */
 export interface Ends { fromLat: number; fromLng: number; toLat: number; toLng: number }
 
+/** An account of the public demo, with its password, which is public on purpose. */
+export interface DemoAccount { role: "Passenger" | "Driver"; name: string; email: string; password: string; description: string }
+
 export const api = {
   register: (body: { email: string; displayName: string; password: string }) => request<Session>("/api/auth/register", post(body)),
   login: (email: string, password: string) => request<Session>("/api/auth/login", post({ email, password })),
   me: () => request<Me>("/api/me"),
+  demo: () => request<DemoAccount[]>("/api/demo"),
 
   places: (q: string, limit = 8) => request<Place[]>(`/api/places${query({ q, limit })}`),
   vehicle: async () => {

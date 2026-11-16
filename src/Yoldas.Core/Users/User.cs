@@ -47,4 +47,19 @@ public sealed class User
     public static string NormalizeEmail(string email) => email.Trim().ToLowerInvariant();
 
     public void SetPasswordHash(string hash) => PasswordHash = hash;
+
+    /// <summary>Counts a review's stars, as a driver or as a passenger. The API adds them in SQL; seeding uses this.</summary>
+    public void AddRating(bool asDriver, int stars)
+    {
+        if (asDriver)
+        {
+            DriverRatingSum += stars;
+            DriverRatingCount++;
+        }
+        else
+        {
+            PassengerRatingSum += stars;
+            PassengerRatingCount++;
+        }
+    }
 }
